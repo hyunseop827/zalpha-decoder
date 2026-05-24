@@ -59,6 +59,8 @@ class ViewController: UIViewController, UITextViewDelegate, UIGestureRecognizerD
     }
 
     let accentColor = UIColor(red: 1.0, green: 0.27, blue: 0.0, alpha: 1.0)
+    let aiService = AIService()
+    var isDecoding = false
     private let maximumInputLength = 100
     var toastLabel: ToastLabel?
     var toastHideWorkItem: DispatchWorkItem?
@@ -102,6 +104,11 @@ class ViewController: UIViewController, UITextViewDelegate, UIGestureRecognizerD
 
     @IBAction func decodeButtonTapped(_ sender: UIButton) {
         view.endEditing(true)
+        guard !isDecoding else { return }
+
+        Task { [weak self] in
+            await self?.runGreetingDecode()
+        }
     }
 
     @IBAction func swapLanguageButtonTapped(_ sender: UIButton) {
