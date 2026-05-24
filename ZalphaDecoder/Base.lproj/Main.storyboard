@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="420" height="912"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RYU-Ba-9Zw">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="RYU-Ba-9Zw">
                                 <rect key="frame" x="0.0" y="190" width="420" height="654"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v0j-jQ-st7" userLabel="Content View">
@@ -33,11 +33,12 @@
                                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fill" alignment="center" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="sZa-lU-jFB" userLabel="Language Row">
                                                                 <rect key="frame" x="0.0" y="0.0" width="394" height="34.333333333333336"/>
                                                                 <subviews>
-                                                                    <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5fx-qn-Is0" userLabel="Language Button1">
+                                                                    <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5fx-qn-Is0" userLabel="Language Button1">
                                                                         <rect key="frame" x="0.0" y="6.3333333333333428" width="140" height="22"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="48" id="3Hg-bc-WuJ"/>
                                                                         </constraints>
+                                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                                         <color key="tintColor" red="1" green="0.27058823529411763" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <menu key="menu" id="nav-z8-8Yj">
                                                                             <children>
@@ -45,7 +46,7 @@
                                                                                 <command title="한국어" id="ZO3-4E-hfG" userLabel="Korean"/>
                                                                             </children>
                                                                         </menu>
-                                                                        <state key="normal" title="Button">
+                                                                        <state key="normal" title="한국어">
                                                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <imageReference key="image" image="globe" catalog="system" symbolScale="medium"/>
                                                                         </state>
@@ -56,20 +57,19 @@
                                                                             <constraint firstAttribute="height" constant="48" id="U9Y-gM-rY3"/>
                                                                             <constraint firstAttribute="width" constant="48" id="frT-XM-dmB"/>
                                                                         </constraints>
-                                                                        <state key="normal" title="Button"/>
-                                                                        <buttonConfiguration key="configuration" style="plain">
+                                                                        <state key="normal" title="Button">
                                                                             <imageReference key="image" image="arrow.left.arrow.right" catalog="system" symbolScale="medium"/>
-                                                                            <color key="baseForegroundColor" red="1" green="0.27058823529999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                                        </buttonConfiguration>
+                                                                        </state>
                                                                         <connections>
                                                                             <action selector="swapLanguageButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1sq-lm-iYk"/>
                                                                         </connections>
                                                                     </button>
-                                                                    <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qqD-0c-Q0K" userLabel="Language Button2">
+                                                                    <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qqD-0c-Q0K" userLabel="Language Button2">
                                                                         <rect key="frame" x="254" y="6.3333333333333428" width="140" height="22"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="48" id="7ra-kj-Dtd"/>
                                                                         </constraints>
+                                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                                         <color key="tintColor" red="1" green="0.27058823529999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <menu key="menu" id="8sT-3C-2id">
                                                                             <children>
@@ -77,7 +77,7 @@
                                                                                 <command title="한국어" id="UZ5-kE-Wx2" userLabel="Korean"/>
                                                                             </children>
                                                                         </menu>
-                                                                        <state key="normal" title="Button">
+                                                                        <state key="normal" title="English">
                                                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <imageReference key="image" image="globe" catalog="system" symbolScale="medium"/>
                                                                         </state>
@@ -99,7 +99,8 @@
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1ma-ss-ZdE" userLabel="Clean">
                                                                         <rect key="frame" x="0.0" y="3.6666666666666288" width="98.666666666666671" height="29"/>
                                                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                        <state key="normal" title="Button"/>
+                                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                                                        <state key="normal" title="Clean"/>
                                                                         <buttonConfiguration key="configuration" style="plain">
                                                                             <attributedString key="attributedTitle">
                                                                                 <fragment content="Clean">
@@ -117,7 +118,8 @@
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KDb-oz-Wea" userLabel="Plain">
                                                                         <rect key="frame" x="98.666666666666686" y="3.6666666666666288" width="98.333333333333314" height="29"/>
                                                                         <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                                        <state key="normal" title="Button"/>
+                                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                                                        <state key="normal" title="Plain"/>
                                                                         <buttonConfiguration key="configuration" style="plain">
                                                                             <attributedString key="attributedTitle">
                                                                                 <fragment content="Plain">
@@ -135,7 +137,8 @@
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vYW-sp-shz" userLabel="Casual">
                                                                         <rect key="frame" x="197" y="3.6666666666666288" width="98.666666666666686" height="29"/>
                                                                         <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                                        <state key="normal" title="Button"/>
+                                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                                                        <state key="normal" title="Casual"/>
                                                                         <buttonConfiguration key="configuration" style="plain">
                                                                             <attributedString key="attributedTitle">
                                                                                 <fragment content="Casual">
@@ -153,7 +156,8 @@
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wmw-R9-WdA" userLabel="Zalpha">
                                                                         <rect key="frame" x="295.66666666666669" y="3.6666666666666288" width="98.333333333333314" height="29"/>
                                                                         <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                                        <state key="normal" title="Button"/>
+                                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                                                        <state key="normal" title="Zalpha"/>
                                                                         <buttonConfiguration key="configuration" style="plain">
                                                                             <attributedString key="attributedTitle">
                                                                                 <fragment content="Zalpha">
@@ -182,22 +186,22 @@
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="16" id="gyO-BP-fpD"/>
                                                                         </constraints>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     </label>
                                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="I am cooked for real bro. it's over for me... 🥀" translatesAutoresizingMaskIntoConstraints="NO" id="3i4-Cw-Faz">
                                                                         <rect key="frame" x="0.0" y="19" width="394" height="167"/>
                                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                                     </textView>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="52/500" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FSs-J2-WSG" userLabel="Text Counter">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0/100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FSs-J2-WSG" userLabel="Text Counter">
                                                                         <rect key="frame" x="356" y="185.99999999999994" width="38" height="14"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="14" id="BPj-Dp-e4M"/>
                                                                         </constraints>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
@@ -221,7 +225,8 @@
                                                                 </constraints>
                                                                 <color key="backgroundColor" red="1" green="0.27058823529999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                <state key="normal" title="Button"/>
+                                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                                                <state key="normal" title="Decode"/>
                                                                 <buttonConfiguration key="configuration" style="filled">
                                                                     <attributedString key="attributedTitle">
                                                                         <fragment content="Decode">
@@ -243,29 +248,22 @@
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Output - English" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="olM-sj-KjT" userLabel="Output Language">
                                                                         <rect key="frame" x="16" y="16" width="362" height="16"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     </label>
-                                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8GB-H4-ZXx">
+                                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="I feel like I really messed up my life. What should I do?" editable="NO" selectable="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8GB-H4-ZXx">
                                                                         <rect key="frame" x="16" y="44" width="362" height="104"/>
                                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                                        <attributedString key="attributedText">
-                                                                            <fragment content="테스트">
-                                                                                <attributes>
-                                                                                    <color key="NSColor" systemColor="labelColor"/>
-                                                                                    <font key="NSFont" metaFont="system" size="20"/>
-                                                                                    <font key="NSOriginalFont" metaFont="system" size="14"/>
-                                                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                                                </attributes>
-                                                                            </fragment>
-                                                                        </attributedString>
+                                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
                                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                                     </textView>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I9j-Hs-IhD">
                                                                         <rect key="frame" x="342.66666666666669" y="165.66666666666663" width="51.333333333333314" height="34.333333333333343"/>
                                                                         <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                                        <state key="normal" title="Button"/>
-                                                                        <buttonConfiguration key="configuration" style="plain" image="document.on.document" catalog="system"/>
+                                                                        <state key="normal" title="Button">
+                                                                            <imageReference key="image" image="doc.on.doc" catalog="system" symbolScale="medium"/>
+                                                                        </state>
                                                                         <connections>
                                                                             <action selector="copyButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mxB-fe-rNa"/>
                                                                         </connections>
@@ -296,12 +294,13 @@
                                                                             <constraint firstAttribute="width" constant="37" id="EzZ-1o-deZ"/>
                                                                         </constraints>
                                                                         <color key="tintColor" red="1" green="0.27058823529999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                                        <state key="normal" title="Button"/>
-                                                                        <buttonConfiguration key="configuration" style="plain" image="lightbulb.max" catalog="system"/>
+                                                                        <state key="normal" title="Button">
+                                                                            <imageReference key="image" image="lightbulb.max" catalog="system" symbolScale="medium"/>
+                                                                        </state>
                                                                     </button>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Decode Notes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eu6-qw-FGR">
                                                                         <rect key="frame" x="45.000000000000007" y="7.9999999999999991" width="79.666666666666686" height="15.666666666666664"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
@@ -441,7 +440,7 @@
     <resources>
         <image name="arrow.left.arrow.right" catalog="system" width="120" height="128"/>
         <image name="clock.arrow.trianglehead.counterclockwise.rotate.90" catalog="system" width="128" height="119"/>
-        <image name="document.on.document" catalog="system" width="116" height="128"/>
+        <image name="doc.on.doc" catalog="system" width="128" height="128"/>
         <image name="globe" catalog="system" width="128" height="123"/>
         <image name="lightbulb.max" catalog="system" width="121" height="128"/>
         <systemColor name="labelColor">
