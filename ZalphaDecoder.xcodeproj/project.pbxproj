@@ -13,13 +13,25 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		004FF3352FC467FB0048ABAC /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		004FF3372FC467FB0048ABAC /* PROJECT_CONTEXT.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = PROJECT_CONTEXT.md; sourceTree = "<group>"; };
+		004FF3392FC467FB0048ABAC /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		00D64FD62FAADC3500CC0F4B /* ZalphaDecoder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZalphaDecoder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		004FF3612FC469130048ABAC /* Exceptions for "icons" folder in "ZalphaDecoder" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"icon-dark.png",
+				"icon-light.png",
+			);
+			target = 00D64FD52FAADC3500CC0F4B /* ZalphaDecoder */;
+		};
 		00D64FE82FAADC3700CC0F4B /* Exceptions for "ZalphaDecoder" folder in "ZalphaDecoder" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				"GoogleService-Info.example.plist",
 				Info.plist,
 			);
 			target = 00D64FD52FAADC3500CC0F4B /* ZalphaDecoder */;
@@ -27,6 +39,14 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		004FF3602FC469120048ABAC /* icons */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				004FF3612FC469130048ABAC /* Exceptions for "icons" folder in "ZalphaDecoder" target */,
+			);
+			path = icons;
+			sourceTree = "<group>";
+		};
 		00D64FD82FAADC3500CC0F4B /* ZalphaDecoder */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -51,12 +71,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		004FF3362FC467FB0048ABAC /* tasks */ = {
+			isa = PBXGroup;
+			children = (
+				004FF3352FC467FB0048ABAC /* README.md */,
+			);
+			path = tasks;
+			sourceTree = "<group>";
+		};
+		004FF3382FC467FB0048ABAC /* custom */ = {
+			isa = PBXGroup;
+			children = (
+				004FF3362FC467FB0048ABAC /* tasks */,
+				004FF3372FC467FB0048ABAC /* PROJECT_CONTEXT.md */,
+			);
+			path = custom;
+			sourceTree = "<group>";
+		};
 		00D64FCD2FAADC3500CC0F4B = {
 			isa = PBXGroup;
 			children = (
+				004FF3382FC467FB0048ABAC /* custom */,
+				004FF3392FC467FB0048ABAC /* README.md */,
 				00D64FD82FAADC3500CC0F4B /* ZalphaDecoder */,
 				00D64FF52FAAE4B000CC0F4B /* Frameworks */,
 				00D64FD72FAADC3500CC0F4B /* Products */,
+				004FF3602FC469120048ABAC /* icons */,
 			);
 			sourceTree = "<group>";
 		};
@@ -91,6 +131,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				004FF3602FC469120048ABAC /* icons */,
 				00D64FD82FAADC3500CC0F4B /* ZalphaDecoder */,
 			);
 			name = ZalphaDecoder;
