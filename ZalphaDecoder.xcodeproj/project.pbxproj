@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		00D64FF22FAADEC800CC0F4B /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 00D64FF12FAADEC800CC0F4B /* FirebaseCore */; };
-		00D64FF42FAADEC800CC0F4B /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 00D64FF32FAADEC800CC0F4B /* FirebaseFunctions */; };
 		00D64FF72FAAE4B000CC0F4B /* FirebaseAILogic in Frameworks */ = {isa = PBXBuildFile; productRef = 00D64FF62FAAE4B000CC0F4B /* FirebaseAILogic */; };
 /* End PBXBuildFile section */
 
@@ -66,7 +65,6 @@
 			files = (
 				00D64FF72FAAE4B000CC0F4B /* FirebaseAILogic in Frameworks */,
 				00D64FF22FAADEC800CC0F4B /* FirebaseCore in Frameworks */,
-				00D64FF42FAADEC800CC0F4B /* FirebaseFunctions in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,7 +137,6 @@
 			name = ZalphaDecoder;
 			packageProductDependencies = (
 				00D64FF12FAADEC800CC0F4B /* FirebaseCore */,
-				00D64FF32FAADEC800CC0F4B /* FirebaseFunctions */,
 				00D64FF62FAAE4B000CC0F4B /* FirebaseAILogic */,
 			);
 			productName = ZalphaDecoder;
@@ -428,11 +425,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 00D64FF02FAADEC800CC0F4B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCore;
-		};
-		00D64FF32FAADEC800CC0F4B /* FirebaseFunctions */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 00D64FF02FAADEC800CC0F4B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFunctions;
 		};
 		00D64FF62FAAE4B000CC0F4B /* FirebaseAILogic */ = {
 			isa = XCSwiftPackageProductDependency;
