@@ -106,16 +106,15 @@ extension ViewController {
     }
 
     func configureStyleButtons() {
-        let buttons: [(UIButton, String)] = [
-            (cleanStyleButton, "Clean"),
-            (plainStyleButton, "Plain"),
-            (casualStyleButton, "Casual"),
-            (genZalphaStyleButton, "Zalpha")
+        let buttons: [UIButton] = [
+            cleanStyleButton,
+            plainStyleButton,
+            casualStyleButton,
+            genZalphaStyleButton
         ]
 
-        buttons.forEach { button, title in
+        buttons.forEach { button in
             button.configuration = nil
-            button.setTitle(title, for: .normal)
             button.titleLabel?.font = .systemFont(ofSize: 16, weight: .semibold)
             button.titleLabel?.adjustsFontSizeToFitWidth = true
             button.titleLabel?.minimumScaleFactor = 0.8

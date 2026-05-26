@@ -7,6 +7,13 @@
 
 import UIKit
 
+enum TranslationStyle {
+    case formal
+    case plain
+    case casual
+    case genZalpha
+}
+
 class ViewController: UIViewController, UITextViewDelegate, UIGestureRecognizerDelegate {
 
     @IBOutlet weak var scrollView: UIScrollView!
@@ -37,25 +44,24 @@ class ViewController: UIViewController, UITextViewDelegate, UIGestureRecognizerD
     @IBOutlet weak var notesTitleLabel: UILabel!
     @IBOutlet weak var notesBodyLabel: UILabel!
 
-    private enum TranslationStyle {
-        case clean
-        case plain
-        case casual
-        case genZalpha
-    }
-
-    private enum Language: CaseIterable {
+    enum Language: CaseIterable {
+        case auto
         case english
         case korean
 
         var displayName: String {
             switch self {
+            case .auto:
+                return "Auto"
             case .english:
                 return "English"
             case .korean:
                 return "한국어"
             }
         }
+
+        static let sourceOptions: [Language] = [.auto, .english, .korean]
+        static let targetOptions: [Language] = [.english, .korean]
     }
 
     let accentColor = UIColor(red: 1.0, green: 0.27, blue: 0.0, alpha: 1.0)
@@ -66,9 +72,9 @@ class ViewController: UIViewController, UITextViewDelegate, UIGestureRecognizerD
     private let maximumInputLength = 100
     var toastLabel: ToastLabel?
     var toastHideWorkItem: DispatchWorkItem?
-    private var selectedStyle: TranslationStyle = .clean
-    private var sourceLanguage: Language = .korean
-    private var targetLanguage: Language = .english
+    var selectedStyle: TranslationStyle = .formal
+    var sourceLanguage: Language = .auto
+    var targetLanguage: Language = .english
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,7 +102,7 @@ class ViewController: UIViewController, UITextViewDelegate, UIGestureRecognizerD
     @IBAction func styleButtonTapped(_ sender: UIButton) {
         switch sender {
         case cleanStyleButton:
-            selectedStyle = .clean
+            selectedStyle = .formal
         case plainStyleButton:
             selectedStyle = .plain
         case casualStyleButton:
@@ -104,7 +110,7 @@ class ViewController: UIViewController, UITextViewDelegate, UIGestureRecognizerD
         case genZalphaStyleButton:
             selectedStyle = .genZalpha
         default:
-            selectedStyle = .clean
+            selectedStyle = .formal
         }
 
         updateStyleSelection()
@@ -115,12 +121,18 @@ class ViewController: UIViewController, UITextViewDelegate, UIGestureRecognizerD
         guard !isDecoding else { return }
 
         Task { [weak self] in
-            await self?.runGreetingDecode()
+            await self?.runDecode()
         }
     }
 
     @IBAction func swapLanguageButtonTapped(_ sender: UIButton) {
-        swap(&sourceLanguage, &targetLanguage)
+        if sourceLanguage == .auto {
+            sourceLanguage = targetLanguage
+            targetLanguage = oppositeLanguage(of: sourceLanguage)
+        } else {
+            swap(&sourceLanguage, &targetLanguage)
+        }
+
         updateLanguageInterface()
     }
 
@@ -175,7 +187,7 @@ class ViewController: UIViewController, UITextViewDelegate, UIGestureRecognizerD
 
     func updateStyleSelection() {
         let styles: [(TranslationStyle, UIButton)] = [
-            (.clean, cleanStyleButton),
+            (.formal, cleanStyleButton),
             (.plain, plainStyleButton),
             (.casual, casualStyleButton),
             (.genZalpha, genZalphaStyleButton)
@@ -193,8 +205,16 @@ class ViewController: UIViewController, UITextViewDelegate, UIGestureRecognizerD
     func updateLanguageInterface() {
         configureLanguageButton(sourceLanguageButton, language: sourceLanguage)
         configureLanguageButton(targetLanguageButton, language: targetLanguage)
-        sourceLanguageButton.menu = makeLanguageMenu(selectedLanguage: sourceLanguage, changesSource: true)
-        targetLanguageButton.menu = makeLanguageMenu(selectedLanguage: targetLanguage, changesSource: false)
+        sourceLanguageButton.menu = makeLanguageMenu(
+            selectedLanguage: sourceLanguage,
+            options: Language.sourceOptions,
+            changesSource: true
+        )
+        targetLanguageButton.menu = makeLanguageMenu(
+            selectedLanguage: targetLanguage,
+            options: Language.targetOptions,
+            changesSource: false
+        )
         inputLanguageLabel.text = "Input - \(sourceLanguage.displayName)"
         outputLanguageLabel.text = "Output - \(targetLanguage.displayName)"
     }
@@ -206,8 +226,8 @@ class ViewController: UIViewController, UITextViewDelegate, UIGestureRecognizerD
         button.accessibilityLabel = language.displayName
     }
 
-    private func makeLanguageMenu(selectedLanguage: Language, changesSource: Bool) -> UIMenu {
-        let actions = Language.allCases.map { language in
+    private func makeLanguageMenu(selectedLanguage: Language, options: [Language], changesSource: Bool) -> UIMenu {
+        let actions = options.map { language in
             UIAction(
                 title: language.displayName,
                 state: language == selectedLanguage ? .on : .off
@@ -222,10 +242,8 @@ class ViewController: UIViewController, UITextViewDelegate, UIGestureRecognizerD
     private func setLanguage(_ language: Language, changesSource: Bool) {
         if changesSource {
             sourceLanguage = language
-            targetLanguage = oppositeLanguage(of: language)
         } else {
             targetLanguage = language
-            sourceLanguage = oppositeLanguage(of: language)
         }
 
         updateLanguageInterface()

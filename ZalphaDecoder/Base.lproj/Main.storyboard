@@ -96,11 +96,11 @@
                                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ZkV-KB-lzb" userLabel="Style Button View">
                                                                 <rect key="frame" x="0.0" y="94.666666666666686" width="394" height="36"/>
                                                                 <subviews>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1ma-ss-ZdE" userLabel="Clean">
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1ma-ss-ZdE" userLabel="Formal">
                                                                         <rect key="frame" x="0.0" y="3.6666666666666288" width="98.666666666666671" height="29"/>
                                                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
-                                                                        <state key="normal" title="Clean"/>
+                                                                        <state key="normal" title="Formal"/>
                                                                         <connections>
                                                                             <action selector="styleButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ndw-56-yZt"/>
                                                                         </connections>
