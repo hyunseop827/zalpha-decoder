@@ -44,18 +44,18 @@ extension ViewController {
             )
             outputTextView.text = decodeResult.result
             notesBodyLabel.attributedText = formattedNotes(decodeResult.notes)
-            HistoryStore.shared.save(
-                HistoryItem(
-                    id: UUID(),
-                    createdAt: Date(),
-                    sourceLanguage: resolvedSourceLanguage.displayName,
-                    targetLanguage: targetLanguage.displayName,
-                    style: selectedStyle.displayName,
-                    inputText: input,
-                    outputText: decodeResult.result,
-                    notes: decodeResult.notes
-                )
+            let historyItem = HistoryItem(
+                id: UUID(),
+                createdAt: Date(),
+                sourceLanguage: resolvedSourceLanguage.displayName,
+                targetLanguage: targetLanguage.displayName,
+                style: selectedStyle.displayName,
+                inputText: input,
+                outputText: decodeResult.result,
+                notes: decodeResult.notes
             )
+            latestHistoryItem = historyItem
+            HistoryStore.shared.save(historyItem)
         } catch AIServiceError.blocked {
             print("Firebase AI Logic decode blocked by safety filters.")
             showToast(DecodeMessage.safetyBlocked)
@@ -74,17 +74,29 @@ extension ViewController {
         }
     }
 
-    /// Updates the Decode button while a Gemini request is in progress.
+    /// Shows or hides the blocking loading overlay while a Gemini request is in progress.
     @MainActor
     func setDecodeLoading(_ isLoading: Bool) {
         isDecoding = isLoading
         decodeButton.isEnabled = !isLoading
         decodeButton.alpha = isLoading ? 0.78 : 1.0
-        let title = isLoading ? "Decoding..." : "Decode"
-        decodeButton.setTitle(title, for: .normal)
-        decodeButton.setTitle(title, for: .disabled)
-        decodeButton.setTitleColor(.white, for: .normal)
-        decodeButton.setTitleColor(UIColor.white.withAlphaComponent(0.86), for: .disabled)
+        navigationItem.leftBarButtonItem?.isEnabled = !isLoading
+
+        if isLoading {
+            view.bringSubviewToFront(loadingOverlayView)
+            loadingOverlayView.isHidden = false
+            loadingActivityIndicator.startAnimating()
+            UIView.animate(withDuration: 0.16) {
+                self.loadingOverlayView.alpha = 1
+            }
+        } else {
+            UIView.animate(withDuration: 0.16) {
+                self.loadingOverlayView.alpha = 0
+            } completion: { _ in
+                self.loadingActivityIndicator.stopAnimating()
+                self.loadingOverlayView.isHidden = true
+            }
+        }
     }
 
     /// Returns the next empty-input toast message based on repeated empty Decode taps.

@@ -19,7 +19,6 @@ final class HistoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "History"
         configureTableView()
         registerForThemeChanges()
     }
@@ -46,16 +45,6 @@ final class HistoryViewController: UIViewController {
         configureDynamicColors()
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.backgroundColor = .clear
-        tableView.separatorStyle = .none
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 154
-        tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 20, right: 0)
-        tableView.showsVerticalScrollIndicator = true
-
-        if #available(iOS 15.0, *) {
-            tableView.sectionHeaderTopPadding = 0
-        }
     }
 
     private func registerForThemeChanges() {

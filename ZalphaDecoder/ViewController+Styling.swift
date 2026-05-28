@@ -23,6 +23,8 @@ extension ViewController {
         configureTextContainers()
         configureUtilityButtons()
         configureKeyboardDismissal()
+        configureNotesCardInteraction()
+        configureLoadingOverlay()
     }
 
     /// Re-applies dynamic colors and shadows when the system light/dark appearance changes.
@@ -56,6 +58,11 @@ extension ViewController {
         }
         notesBodyLabel.textColor = labelColor
         notesBodyLabel.font = .systemFont(ofSize: 14, weight: .medium)
+        loadingOverlayView.backgroundColor = loadingOverlayColor
+        loadingTitleLabel.textColor = labelColor
+        loadingActivityIndicator.color = accentColor
+        loadingCardView?.backgroundColor = cardBackgroundColor
+        loadingCardView?.layer.borderColor = borderColor.cgColor
         toastLabel?.backgroundColor = toastBackgroundColor
         toastLabel?.textColor = toastTextColor
 
@@ -173,9 +180,33 @@ extension ViewController {
         view.addGestureRecognizer(tapGesture)
     }
 
+    /// Makes the Decode Notes card open the current decode detail.
+    func configureNotesCardInteraction() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(notesCardTapped))
+        notesCardView.addGestureRecognizer(tapGesture)
+        notesCardView.isUserInteractionEnabled = true
+        notesCardView.accessibilityTraits.insert(.button)
+        notesCardView.accessibilityLabel = "Decode Notes Detail"
+    }
+
+    /// Configures the full-screen blocking overlay shown during Decode requests.
+    func configureLoadingOverlay() {
+        loadingOverlayView.isHidden = true
+        loadingOverlayView.alpha = 0
+        loadingActivityIndicator.stopAnimating()
+
+        loadingCardView?.layer.cornerRadius = 16
+        loadingCardView?.layer.cornerCurve = .continuous
+        loadingCardView?.layer.borderWidth = 1
+        loadingCardView?.layer.shadowColor = UIColor.black.cgColor
+        loadingCardView?.layer.shadowOpacity = isDarkMode ? 0.18 : 0.14
+        loadingCardView?.layer.shadowOffset = CGSize(width: 0, height: 4)
+        loadingCardView?.layer.shadowRadius = 12
+    }
+
     /// Updates shadow paths after views have final bounds.
     func updateShadowPaths() {
-        [mainCardView, inputCardView, outputCardView, notesCardView, sourceLanguageButton, swapLanguageButton, targetLanguageButton, cleanStyleButton, plainStyleButton, casualStyleButton, genZalphaStyleButton].forEach {
+        [mainCardView, inputCardView, outputCardView, notesCardView, sourceLanguageButton, swapLanguageButton, targetLanguageButton, cleanStyleButton, plainStyleButton, casualStyleButton, genZalphaStyleButton, loadingCardView].forEach {
             guard let view = $0 else { return }
             view.layer.shadowPath = UIBezierPath(roundedRect: view.bounds, cornerRadius: view.layer.cornerRadius).cgPath
         }
@@ -204,6 +235,10 @@ extension ViewController {
 
     var isDarkMode: Bool {
         traitCollection.userInterfaceStyle == .dark
+    }
+
+    var loadingCardView: UIView? {
+        loadingTitleLabel.superview?.superview
     }
 
     var pageBackgroundColor: UIColor {
@@ -235,6 +270,14 @@ extension ViewController {
             traits.userInterfaceStyle == .dark
                 ? UIColor(white: 1.0, alpha: 0.14)
                 : UIColor(white: 0.0, alpha: 0.16)
+        }
+    }
+
+    var loadingOverlayColor: UIColor {
+        UIColor { traits in
+            traits.userInterfaceStyle == .dark
+                ? UIColor(white: 0.0, alpha: 0.46)
+                : UIColor(white: 0.0, alpha: 0.24)
         }
     }
 

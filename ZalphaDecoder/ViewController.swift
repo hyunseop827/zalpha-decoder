@@ -30,6 +30,7 @@ enum TranslationStyle {
 
 /// Main storyboard-backed screen controller for user actions and screen state.
 class ViewController: UIViewController, UITextViewDelegate, UIGestureRecognizerDelegate {
+    private static let currentDecodeDetailSegueIdentifier = "ShowCurrentDecodeDetail"
 
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var contentView: UIView!
@@ -58,6 +59,9 @@ class ViewController: UIViewController, UITextViewDelegate, UIGestureRecognizerD
     @IBOutlet weak var notesIconButton: UIButton!
     @IBOutlet weak var notesTitleLabel: UILabel!
     @IBOutlet weak var notesBodyLabel: UILabel!
+    @IBOutlet weak var loadingOverlayView: UIView!
+    @IBOutlet weak var loadingActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var loadingTitleLabel: UILabel!
 
     /// Supported language options shown in the source and target menus.
     enum Language: CaseIterable {
@@ -92,6 +96,7 @@ class ViewController: UIViewController, UITextViewDelegate, UIGestureRecognizerD
     var selectedStyle: TranslationStyle = .formal
     var sourceLanguage: Language = .auto
     var targetLanguage: Language = .english
+    var latestHistoryItem: HistoryItem?
 
     /// Performs one-time screen setup after storyboard outlets are connected.
     override func viewDidLoad() {
@@ -117,6 +122,17 @@ class ViewController: UIViewController, UITextViewDelegate, UIGestureRecognizerD
         super.viewDidAppear(animated)
 
         showStartupSplashIfNeeded()
+    }
+
+    /// Passes the latest decoded item into the detail screen when the notes card is tapped.
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard segue.identifier == Self.currentDecodeDetailSegueIdentifier,
+              let detailViewController = segue.destination as? HistoryDetailViewController,
+              let latestHistoryItem else {
+            return
+        }
+
+        detailViewController.configure(with: latestHistoryItem)
     }
 
     /// Updates the selected style when one of the style buttons is tapped.
@@ -167,6 +183,16 @@ class ViewController: UIViewController, UITextViewDelegate, UIGestureRecognizerD
         UIPasteboard.general.string = output
         UINotificationFeedbackGenerator().notificationOccurred(.success)
         showToast("Saved to clipboard.")
+    }
+
+    /// Opens the current decode result in the History Detail screen.
+    @objc func notesCardTapped() {
+        guard latestHistoryItem != nil else {
+            showToast("Nothing to show yet.")
+            return
+        }
+
+        performSegue(withIdentifier: Self.currentDecodeDetailSegueIdentifier, sender: self)
     }
 
     /// Ends text editing when the background tap gesture fires.

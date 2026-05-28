@@ -73,30 +73,17 @@ final class HistoryCell: UITableViewCell {
     }
 
     private func configureRuntimeStyle() {
-        selectionStyle = .none
-        backgroundColor = .clear
-        contentView.backgroundColor = .clear
-        contentView.clipsToBounds = false
-        clipsToBounds = false
-
         cardView.layer.cornerRadius = 14
         cardView.layer.cornerCurve = .continuous
         cardView.layer.borderWidth = 1
         cardView.layer.shadowColor = UIColor.black.cgColor
         cardView.layer.shadowRadius = 5
         cardView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        cardView.clipsToBounds = false
 
         applyDynamicColors()
     }
 
     private func applyDynamicColors() {
-        metadataLabel.textColor = .secondaryLabel
-        inputTitleLabel.textColor = .secondaryLabel
-        outputTitleLabel.textColor = .secondaryLabel
-        inputPreviewLabel.textColor = .label
-        outputPreviewLabel.textColor = .label
-        chevronImageView.tintColor = .tertiaryLabel
         dividerView.backgroundColor = borderColor
         cardView.backgroundColor = cardBackgroundColor
         cardView.layer.borderColor = borderColor.cgColor
