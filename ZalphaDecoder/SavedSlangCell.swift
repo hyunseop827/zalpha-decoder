@@ -43,7 +43,7 @@ final class SavedSlangCell: UITableViewCell {
     func configure(with item: SavedSlang) {
         expressionLabel.text = item.sourceExpression
         meaningLabel.text = item.meanings.first.map { "Meaning: \($0)" } ?? "Meaning: -"
-        metadataLabel.text = "Updated \(HistoryDateFormatter.shortDateTime.string(from: item.updatedAt))"
+        metadataLabel.text = "\(item.sourceLanguage) · Updated \(HistoryDateFormatter.shortDateTime.string(from: item.updatedAt))"
         applyDynamicColors()
     }
 

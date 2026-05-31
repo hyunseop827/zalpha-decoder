@@ -128,7 +128,7 @@ extension ViewController {
         paragraphStyle.paragraphSpacing = 7
 
         let text = notes
-            .prefix(3)
+            .prefix(5)
             .filter { !$0.sourceExpression.isEmpty && !$0.meaning.isEmpty }
             .map { note in
                 let translatedText = note.translatedExpression.isEmpty

@@ -37,8 +37,12 @@ extension SavedSlangsViewController: UISearchResultsUpdating {
 
         filteredItems = items.filter { item in
             item.sourceExpression.lowercased().contains(query)
+                || item.sourceLanguage.lowercased().contains(query)
                 || item.meanings.contains { $0.lowercased().contains(query) }
                 || item.translatedExpressions.contains { $0.lowercased().contains(query) }
+                || item.examples.contains {
+                    $0.sentence.lowercased().contains(query) || $0.meaning.lowercased().contains(query)
+                }
         }
     }
 

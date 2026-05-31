@@ -27,6 +27,26 @@ extension SavedSlangDetailViewController {
         }
     }
 
+    func renderExamples(_ examples: [SavedSlangExample]) {
+        examplesStackView.arrangedSubviews.forEach {
+            examplesStackView.removeArrangedSubview($0)
+            $0.removeFromSuperview()
+        }
+
+        let visibleExamples = Array(examples.prefix(8))
+        exampleCopyTexts = visibleExamples.map(\.sentence)
+        exampleIDs = visibleExamples.map(\.id)
+
+        guard !visibleExamples.isEmpty else {
+            examplesStackView.addArrangedSubview(makeValueLabel("No examples generated yet.", isEmptyState: true))
+            return
+        }
+
+        visibleExamples.enumerated().forEach { index, example in
+            examplesStackView.addArrangedSubview(makeExampleView(example, index: index))
+        }
+    }
+
     private func makeValueLabel(_ text: String, isEmptyState: Bool) -> UILabel {
         let label = UILabel()
         label.text = text
@@ -34,5 +54,67 @@ extension SavedSlangDetailViewController {
         label.font = .systemFont(ofSize: 15, weight: isEmptyState ? .medium : .semibold)
         label.textColor = isEmptyState ? .secondaryLabel : .label
         return label
+    }
+
+    private func makeExampleView(_ example: SavedSlangExample, index: Int) -> UIView {
+        let containerView = UIView()
+        containerView.backgroundColor = UIColor.secondarySystemBackground.withAlphaComponent(0.55)
+        containerView.layer.cornerRadius = 10
+        containerView.layer.cornerCurve = .continuous
+
+        let sentenceLabel = UILabel()
+        sentenceLabel.text = example.sentence
+        sentenceLabel.numberOfLines = 0
+        sentenceLabel.font = .systemFont(ofSize: 15, weight: .semibold)
+        sentenceLabel.textColor = .label
+
+        let meaningLabel = UILabel()
+        meaningLabel.text = example.meaning
+        meaningLabel.numberOfLines = 0
+        meaningLabel.font = .systemFont(ofSize: 13, weight: .medium)
+        meaningLabel.textColor = .secondaryLabel
+
+        let textStackView = UIStackView(arrangedSubviews: [sentenceLabel, meaningLabel])
+        textStackView.axis = .vertical
+        textStackView.spacing = 4
+
+        let copyButton = UIButton(type: .system)
+        copyButton.setImage(UIImage(systemName: "document.on.document"), for: .normal)
+        copyButton.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(scale: .small), forImageIn: .normal)
+        copyButton.tintColor = accentColor
+        copyButton.tag = index
+        copyButton.widthAnchor.constraint(equalToConstant: 28).isActive = true
+        copyButton.heightAnchor.constraint(equalToConstant: 28).isActive = true
+        copyButton.addTarget(self, action: #selector(copyExampleButtonTapped(_:)), for: .touchUpInside)
+
+        let deleteButton = UIButton(type: .system)
+        deleteButton.setImage(UIImage(systemName: "trash"), for: .normal)
+        deleteButton.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(scale: .small), forImageIn: .normal)
+        deleteButton.tintColor = .systemRed
+        deleteButton.tag = index
+        deleteButton.widthAnchor.constraint(equalToConstant: 28).isActive = true
+        deleteButton.heightAnchor.constraint(equalToConstant: 28).isActive = true
+        deleteButton.addTarget(self, action: #selector(deleteExampleButtonTapped(_:)), for: .touchUpInside)
+
+        let actionStackView = UIStackView(arrangedSubviews: [copyButton, deleteButton])
+        actionStackView.axis = .horizontal
+        actionStackView.alignment = .center
+        actionStackView.spacing = 4
+
+        let rowStackView = UIStackView(arrangedSubviews: [textStackView, actionStackView])
+        rowStackView.axis = .horizontal
+        rowStackView.alignment = .top
+        rowStackView.spacing = 10
+        rowStackView.translatesAutoresizingMaskIntoConstraints = false
+
+        containerView.addSubview(rowStackView)
+        NSLayoutConstraint.activate([
+            rowStackView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 12),
+            rowStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 12),
+            rowStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -12),
+            rowStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -12)
+        ])
+
+        return containerView
     }
 }

@@ -12,13 +12,25 @@ final class SavedSlangDetailViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var expressionLabel: UILabel!
+    @IBOutlet weak var expressionCopyButton: UIButton!
     @IBOutlet weak var metadataLabel: UILabel!
     @IBOutlet weak var meaningsCardView: UIView!
     @IBOutlet weak var meaningsStackView: UIStackView!
     @IBOutlet weak var translationsCardView: UIView!
     @IBOutlet weak var translationsStackView: UIStackView!
+    @IBOutlet weak var examplesCardView: UIView!
+    @IBOutlet weak var examplesStackView: UIStackView!
+    @IBOutlet weak var generateExamplesButton: UIButton!
+    @IBOutlet weak var examplesLoadingOverlayView: UIView!
+    @IBOutlet weak var examplesLoadingCardView: UIView!
+    @IBOutlet weak var examplesLoadingIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var examplesLoadingLabel: UILabel!
 
+    let aiService = AIService()
     var item: SavedSlang?
+    var isGeneratingExamples = false
+    var exampleCopyTexts: [String] = []
+    var exampleIDs: [UUID] = []
     var toastLabel: ToastLabel?
     var toastHideWorkItem: DispatchWorkItem?
 
@@ -46,12 +58,14 @@ final class SavedSlangDetailViewController: UIViewController {
         }
     }
 
-    private func renderItem() {
+    func renderItem() {
         guard let item else { return }
 
         expressionLabel.text = item.sourceExpression
-        metadataLabel.text = "Updated \(HistoryDateFormatter.shortDateTime.string(from: item.updatedAt))"
+        metadataLabel.text = "\(item.sourceLanguage) · Updated \(HistoryDateFormatter.shortDateTime.string(from: item.updatedAt))"
+        generateExamplesButton.setTitle(item.examples.isEmpty ? "Generate Examples" : "Regenerate Examples", for: .normal)
         renderValues(item.meanings, in: meaningsStackView, emptyText: "No meanings saved.")
         renderValues(item.translatedExpressions, in: translationsStackView, emptyText: "No translations saved.")
+        renderExamples(item.examples)
     }
 }

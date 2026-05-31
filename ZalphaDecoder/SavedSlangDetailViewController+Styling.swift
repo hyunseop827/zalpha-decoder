@@ -22,9 +22,16 @@ extension SavedSlangDetailViewController {
         scrollView.backgroundColor = pageBackgroundColor
         contentView.backgroundColor = pageBackgroundColor
         expressionLabel.textColor = accentColor
+        expressionCopyButton.tintColor = accentColor
         metadataLabel.textColor = .secondaryLabel
+        generateExamplesButton.tintColor = accentColor
+        examplesLoadingOverlayView.backgroundColor = loadingOverlayColor
+        examplesLoadingCardView.backgroundColor = cardBackgroundColor
+        examplesLoadingCardView.layer.borderColor = borderColor.cgColor
+        examplesLoadingIndicator.color = accentColor
+        examplesLoadingLabel.textColor = .label
 
-        [meaningsCardView, translationsCardView].forEach {
+        [meaningsCardView, translationsCardView, examplesCardView].forEach {
             $0?.backgroundColor = cardBackgroundColor
             $0?.layer.borderColor = borderColor.cgColor
         }
@@ -34,7 +41,7 @@ extension SavedSlangDetailViewController {
     }
 
     func configureCards() {
-        [meaningsCardView, translationsCardView].forEach {
+        [meaningsCardView, translationsCardView, examplesCardView].forEach {
             $0?.layer.cornerRadius = 14
             $0?.layer.cornerCurve = .continuous
             $0?.layer.borderWidth = 1
@@ -43,16 +50,31 @@ extension SavedSlangDetailViewController {
             $0?.layer.shadowRadius = 6
             $0?.layer.shadowOffset = CGSize(width: 0, height: 3)
         }
+        generateExamplesButton.layer.cornerRadius = 12
+        generateExamplesButton.layer.cornerCurve = .continuous
+        examplesLoadingOverlayView.isHidden = true
+        examplesLoadingOverlayView.alpha = 0
+        examplesLoadingCardView.layer.cornerRadius = 16
+        examplesLoadingCardView.layer.cornerCurve = .continuous
+        examplesLoadingCardView.layer.borderWidth = 1
+        examplesLoadingCardView.layer.shadowColor = UIColor.black.cgColor
+        examplesLoadingCardView.layer.shadowOpacity = isDarkMode ? 0.18 : 0.14
+        examplesLoadingCardView.layer.shadowOffset = CGSize(width: 0, height: 4)
+        examplesLoadingCardView.layer.shadowRadius = 12
     }
 
     func updateShadowPaths() {
-        [meaningsCardView, translationsCardView].forEach {
+        [meaningsCardView, translationsCardView, examplesCardView].forEach {
             guard let view = $0 else { return }
             view.layer.shadowPath = UIBezierPath(
                 roundedRect: view.bounds,
                 cornerRadius: view.layer.cornerRadius
             ).cgPath
         }
+        examplesLoadingCardView.layer.shadowPath = UIBezierPath(
+            roundedRect: examplesLoadingCardView.bounds,
+            cornerRadius: examplesLoadingCardView.layer.cornerRadius
+        ).cgPath
     }
 
     var isDarkMode: Bool {
@@ -98,6 +120,14 @@ extension SavedSlangDetailViewController {
     var toastTextColor: UIColor {
         UIColor { traitCollection in
             traitCollection.userInterfaceStyle == .dark ? UIColor.black : UIColor.white
+        }
+    }
+
+    var loadingOverlayColor: UIColor {
+        UIColor { traitCollection in
+            traitCollection.userInterfaceStyle == .dark
+                ? UIColor(white: 0, alpha: 0.45)
+                : UIColor(white: 0, alpha: 0.24)
         }
     }
 }

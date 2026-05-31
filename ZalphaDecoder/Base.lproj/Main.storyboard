@@ -710,17 +710,36 @@
                                 <rect key="frame" x="0.0" y="74" width="420" height="770"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tAh-XC-tmA" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="420" height="465"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="420" height="670"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="gDo-vC-Kkq" userLabel="Detail Stack View">
-                                                <rect key="frame" x="20" y="28" width="380" height="413"/>
+                                                <rect key="frame" x="20" y="28" width="380" height="618"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="조졌다" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uvw-cD-q5h" userLabel="Expression Label">
+                                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="WXh-Oq-prH" userLabel="Expression Row">
                                                         <rect key="frame" x="0.0" y="0.0" width="380" height="38.333333333333336"/>
-                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="32"/>
-                                                        <color key="textColor" red="1" green="0.27058823529999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="250" verticalHuggingPriority="251" text="조졌다" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uvw-cD-q5h" userLabel="Expression Label">
+                                                                <rect key="frame" x="0.0" y="0.0" width="336" height="38.333333333333336"/>
+                                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="32"/>
+                                                                <color key="textColor" red="1" green="0.27058823529999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U69-rf-FI8" userLabel="Expression Copy Button">
+                                                                <rect key="frame" x="346" y="2.1666666666666643" width="34" height="34"/>
+                                                                <color key="tintColor" red="1" green="0.27058823529999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="34" id="cJm-Ut-7aM"/>
+                                                                    <constraint firstAttribute="width" constant="34" id="qf6-zH-gj1"/>
+                                                                </constraints>
+                                                                <state key="normal">
+                                                                    <imageReference key="image" image="document.on.document" catalog="system" symbolScale="medium"/>
+                                                                </state>
+                                                                <connections>
+                                                                    <action selector="copyExpressionButtonTapped:" destination="Roq-ZF-Xqh" eventType="touchUpInside" id="kqP-iR-KtG"/>
+                                                                </connections>
+                                                            </button>
+                                                        </subviews>
+                                                    </stackView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Updated May 27, 2026 at 10:38 PM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mUJ-BB-n5g" userLabel="Metadata Label">
                                                         <rect key="frame" x="0.0" y="54.333333333333343" width="380" height="15.666666666666671"/>
                                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
@@ -791,6 +810,60 @@
                                                             <constraint firstAttribute="trailing" secondItem="ikW-Q8-3IR" secondAttribute="trailing" constant="16" id="qg3-rk-rTh"/>
                                                         </constraints>
                                                     </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZQh-vh-e6A" userLabel="Examples Card View">
+                                                        <rect key="frame" x="0.0" y="429" width="380" height="189"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Examples" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u1E-BE-PP3" userLabel="Examples Title Label">
+                                                                <rect key="frame" x="16" y="16" width="348" height="20.333333333333329"/>
+                                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="acK-h7-HBE" userLabel="Examples Control Row">
+                                                                <rect key="frame" x="16" y="50.333333333333314" width="348" height="36"/>
+                                                                <subviews>
+                                                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="250" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tJi-rd-z9b" userLabel="Generate Examples Button">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="348" height="36"/>
+                                                                        <color key="backgroundColor" red="1" green="0.27058823529999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="height" constant="36" id="Qt3-vz-edJ"/>
+                                                                        </constraints>
+                                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                                                        <state key="normal" title="Generate Examples">
+                                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        </state>
+                                                                        <connections>
+                                                                            <action selector="generateExamplesButtonTapped:" destination="Roq-ZF-Xqh" eventType="touchUpInside" id="RCD-Wi-yZr"/>
+                                                                        </connections>
+                                                                    </button>
+                                                                </subviews>
+                                                            </stackView>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="JvC-wx-v3y" userLabel="Examples Stack View">
+                                                                <rect key="frame" x="16" y="100.33333333333331" width="348" height="72.666666666666686"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No examples generated yet." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="seH-6w-eiI" userLabel="Examples Empty Label">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="348" height="72.666666666666686"/>
+                                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                                                        <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                            </stackView>
+                                                        </subviews>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                        <constraints>
+                                                            <constraint firstItem="u1E-BE-PP3" firstAttribute="top" secondItem="ZQh-vh-e6A" secondAttribute="top" constant="16" id="0Wn-ey-rrH"/>
+                                                            <constraint firstItem="u1E-BE-PP3" firstAttribute="leading" secondItem="ZQh-vh-e6A" secondAttribute="leading" constant="16" id="5U4-Li-Zj2"/>
+                                                            <constraint firstAttribute="trailing" secondItem="u1E-BE-PP3" secondAttribute="trailing" constant="16" id="LEg-VK-R38"/>
+                                                            <constraint firstItem="acK-h7-HBE" firstAttribute="top" secondItem="u1E-BE-PP3" secondAttribute="bottom" constant="14" id="V1x-Vy-zR8"/>
+                                                            <constraint firstItem="acK-h7-HBE" firstAttribute="leading" secondItem="ZQh-vh-e6A" secondAttribute="leading" constant="16" id="tyT-DH-xnp"/>
+                                                            <constraint firstAttribute="trailing" secondItem="acK-h7-HBE" secondAttribute="trailing" constant="16" id="AWs-Ei-h9t"/>
+                                                            <constraint firstItem="JvC-wx-v3y" firstAttribute="top" secondItem="acK-h7-HBE" secondAttribute="bottom" constant="14" id="Ca0-e8-jMY"/>
+                                                            <constraint firstItem="JvC-wx-v3y" firstAttribute="leading" secondItem="ZQh-vh-e6A" secondAttribute="leading" constant="16" id="d8h-WZ-Vua"/>
+                                                            <constraint firstAttribute="trailing" secondItem="JvC-wx-v3y" secondAttribute="trailing" constant="16" id="j3P-mV-24A"/>
+                                                            <constraint firstAttribute="bottom" secondItem="JvC-wx-v3y" secondAttribute="bottom" constant="16" id="e9I-NP-2sV"/>
+                                                        </constraints>
+                                                    </view>
                                                 </subviews>
                                             </stackView>
                                         </subviews>
@@ -814,14 +887,56 @@
                                 <viewLayoutGuide key="contentLayoutGuide" id="wqj-xM-NrC"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="NsF-So-fXw"/>
                             </scrollView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pE2-mD-7Yq" userLabel="Examples Loading Overlay View">
+                                <rect key="frame" x="0.0" y="0.0" width="420" height="844"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eDX-L6-v5e" userLabel="Examples Loading Card View">
+                                        <rect key="frame" x="96" y="383" width="228" height="78"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="pcR-Ca-tLx" userLabel="Examples Loading Stack View">
+                                                <rect key="frame" x="22.333333333333343" y="29" width="183.33333333333334" height="20.333333333333329"/>
+                                                <subviews>
+                                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="h5b-cZ-w72" userLabel="Examples Loading Indicator">
+                                                        <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+                                                    </activityIndicatorView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Generating examples..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ERy-kW-qYh" userLabel="Examples Loading Label">
+                                                        <rect key="frame" x="30" y="0.0" width="153.33333333333334" height="20.333333333333332"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="pcR-Ca-tLx" firstAttribute="centerX" secondItem="eDX-L6-v5e" secondAttribute="centerX" id="3aK-hH-ff8"/>
+                                            <constraint firstItem="pcR-Ca-tLx" firstAttribute="centerY" secondItem="eDX-L6-v5e" secondAttribute="centerY" id="N0c-ZW-DhE"/>
+                                            <constraint firstItem="pcR-Ca-tLx" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="eDX-L6-v5e" secondAttribute="leading" constant="20" id="R1l-Sn-cCB"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="pcR-Ca-tLx" secondAttribute="trailing" constant="20" id="t5r-mX-jB4"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.23999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="eDX-L6-v5e" firstAttribute="centerX" secondItem="pE2-mD-7Yq" secondAttribute="centerX" id="3Dk-I5-lNf"/>
+                                    <constraint firstItem="eDX-L6-v5e" firstAttribute="centerY" secondItem="pE2-mD-7Yq" secondAttribute="centerY" id="G7B-S5-bxl"/>
+                                    <constraint firstItem="eDX-L6-v5e" firstAttribute="height" constant="78" id="Xyw-hA-H9n"/>
+                                    <constraint firstItem="eDX-L6-v5e" firstAttribute="width" constant="228" id="wGL-X4-Wax"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="CPg-i8-kJf"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="pE2-mD-7Yq" firstAttribute="top" secondItem="df8-QE-Bpf" secondAttribute="top" id="09p-Xq-RXW"/>
+                            <constraint firstItem="pE2-mD-7Yq" firstAttribute="leading" secondItem="df8-QE-Bpf" secondAttribute="leading" id="3GJ-r8-xmk"/>
                             <constraint firstItem="Pz7-qr-U7n" firstAttribute="leading" secondItem="CPg-i8-kJf" secondAttribute="leading" id="AKi-Jd-oQR"/>
                             <constraint firstItem="CPg-i8-kJf" firstAttribute="bottom" secondItem="Pz7-qr-U7n" secondAttribute="bottom" id="LKB-MN-VUk"/>
+                            <constraint firstAttribute="bottom" secondItem="pE2-mD-7Yq" secondAttribute="bottom" id="VLP-X4-LcJ"/>
                             <constraint firstItem="Pz7-qr-U7n" firstAttribute="top" secondItem="CPg-i8-kJf" secondAttribute="top" id="Yc7-k4-cKI"/>
                             <constraint firstItem="CPg-i8-kJf" firstAttribute="trailing" secondItem="Pz7-qr-U7n" secondAttribute="trailing" id="adx-QN-6wa"/>
+                            <constraint firstAttribute="trailing" secondItem="pE2-mD-7Yq" secondAttribute="trailing" id="pkF-9L-KgJ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Saved Slang" id="67l-b7-GAH">
@@ -831,16 +946,19 @@
                                     <action selector="deleteSlangButtonTapped:" destination="Roq-ZF-Xqh" id="itQ-sF-Ud7"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="Item" image="document.on.document" catalog="system" id="N22-YU-kYV">
-                                <connections>
-                                    <action selector="copyExpressionButtonTapped:" destination="Roq-ZF-Xqh" id="Ahf-j1-aBR"/>
-                                </connections>
-                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="contentView" destination="tAh-XC-tmA" id="zWK-DJ-9Pj"/>
+                        <outlet property="examplesCardView" destination="ZQh-vh-e6A" id="jpR-xN-hHq"/>
+                        <outlet property="examplesLoadingCardView" destination="eDX-L6-v5e" id="i1Z-uT-DKq"/>
+                        <outlet property="examplesLoadingIndicator" destination="h5b-cZ-w72" id="GCN-wO-1aa"/>
+                        <outlet property="examplesLoadingLabel" destination="ERy-kW-qYh" id="cPk-Hp-MC7"/>
+                        <outlet property="examplesLoadingOverlayView" destination="pE2-mD-7Yq" id="IDM-pf-Nwr"/>
+                        <outlet property="examplesStackView" destination="JvC-wx-v3y" id="XFe-bX-oBA"/>
                         <outlet property="expressionLabel" destination="Uvw-cD-q5h" id="vvh-K4-qp7"/>
+                        <outlet property="expressionCopyButton" destination="U69-rf-FI8" id="4hp-Lc-Npk"/>
+                        <outlet property="generateExamplesButton" destination="tJi-rd-z9b" id="kx2-O8-ybm"/>
                         <outlet property="meaningsCardView" destination="IBb-oS-YaZ" id="fWi-uw-7Cg"/>
                         <outlet property="meaningsStackView" destination="Sij-CY-ccn" id="OgJ-ZK-xnA"/>
                         <outlet property="metadataLabel" destination="mUJ-BB-n5g" id="O7U-hw-gxe"/>

@@ -10,7 +10,7 @@ import UIKit
 /// Builds and handles the structured Decode Notes shown in history detail.
 extension HistoryDetailViewController {
 
-    /// Renders up to three saved notes into the notes stack.
+    /// Renders up to five saved notes into the notes stack.
     func renderNotes(_ notes: [DecodeNote]) {
         guard !notes.isEmpty else {
             emptyNotesLabel?.text = "No notes for this decode."
@@ -19,7 +19,7 @@ extension HistoryDetailViewController {
         }
 
         emptyNotesLabel?.isHidden = true
-        notes.prefix(3).forEach {
+        notes.prefix(5).forEach {
             notesStackView?.addArrangedSubview(makeNoteView($0))
         }
     }
@@ -141,7 +141,7 @@ extension HistoryDetailViewController {
         )
         alertController.addAction(UIAlertAction(title: "No", style: .cancel))
         alertController.addAction(UIAlertAction(title: "Yes", style: .default) { [weak self] _ in
-            let result = SavedSlangStore.shared.save(note)
+            let result = SavedSlangStore.shared.save(note, sourceLanguage: self?.item?.sourceLanguage ?? "Unknown")
             UINotificationFeedbackGenerator().notificationOccurred(.success)
             self?.showToast(result.message)
         })

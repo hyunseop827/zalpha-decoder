@@ -7,15 +7,23 @@
 
 import UIKit
 
-/// Handles user actions for copying or deleting one saved slang item.
+/// Handles user actions for copying examples or deleting one saved slang item.
 extension SavedSlangDetailViewController {
 
-    @IBAction func copyExpressionButtonTapped(_ sender: UIBarButtonItem) {
+    @IBAction func copyExpressionButtonTapped(_ sender: Any) {
         guard let expression = item?.sourceExpression, !expression.isEmpty else { return }
 
         UIPasteboard.general.string = expression
         UINotificationFeedbackGenerator().notificationOccurred(.success)
         showToast("Expression copied.")
+    }
+
+    @objc func copyExampleButtonTapped(_ sender: UIButton) {
+        guard exampleCopyTexts.indices.contains(sender.tag) else { return }
+
+        UIPasteboard.general.string = exampleCopyTexts[sender.tag]
+        UINotificationFeedbackGenerator().notificationOccurred(.success)
+        showToast("Example copied.")
     }
 
     @IBAction func deleteSlangButtonTapped(_ sender: UIBarButtonItem) {

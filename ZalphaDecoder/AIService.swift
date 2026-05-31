@@ -32,6 +32,12 @@ struct DecodeResult: Decodable {
     let notes: [DecodeNote]
 }
 
+/// Generated example sentence for a saved slang expression.
+struct GeneratedSlangExample: Decodable {
+    let sentence: String
+    let meaning: String
+}
+
 /// Thin Firebase AI Logic wrapper that builds decode prompts and returns cleaned model text.
 final class AIService {
     private lazy var model = FirebaseAI.firebaseAI(backend: .googleAI()).generativeModel(
@@ -49,31 +55,7 @@ final class AIService {
             targetLanguage: targetLanguage,
             style: style
         )
-        let response: GenerateContentResponse
-        do {
-            response = try await model.generateContent(prompt)
-        } catch GenerateContentError.promptBlocked {
-            throw AIServiceError.blocked
-        } catch GenerateContentError.responseStoppedEarly {
-            throw AIServiceError.blocked
-        } catch GenerateContentError.internalError(let underlying) {
-            throw classifyInternalError(underlying)
-        } catch let error as URLError {
-            print("Firebase AI Logic network error:", error)
-            throw AIServiceError.networkUnavailable
-        } catch {
-            if let mappedError = mapUnderlyingError(error) {
-                throw mappedError
-            }
-
-            throw error
-        }
-
-        let rawText = response.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-
-        guard !rawText.isEmpty else {
-            throw AIServiceError.emptyResponse
-        }
+        let rawText = try await generateRawText(prompt: prompt)
 
         guard let jsonText = extractJSONObject(from: rawText),
               let data = jsonText.data(using: .utf8) else {
@@ -100,7 +82,7 @@ final class AIService {
                         )
                     }
                     .filter { !$0.sourceExpression.isEmpty && !$0.meaning.isEmpty }
-                    .prefix(3)
+                    .prefix(5)
                     .map { $0 }
             )
         } catch let error as AIServiceError {
@@ -109,6 +91,65 @@ final class AIService {
             print("Firebase AI Logic invalid JSON response:", rawText)
             throw AIServiceError.invalidResponse
         }
+    }
+
+    /// Generates short example sentences for one saved slang expression.
+    func generateExamples(expression: String, meaning: String, sourceLanguage: String) async throws -> [GeneratedSlangExample] {
+        let prompt = makeExamplesPrompt(expression: expression, meaning: meaning, sourceLanguage: sourceLanguage)
+        let rawText = try await generateRawText(prompt: prompt)
+
+        guard let jsonText = extractJSONObject(from: rawText),
+              let data = jsonText.data(using: .utf8) else {
+            print("Firebase AI Logic invalid examples JSON response:", rawText)
+            throw AIServiceError.invalidResponse
+        }
+
+        do {
+            let response = try JSONDecoder().decode(GeneratedExamplesResponse.self, from: data)
+            return response.examples
+                .map { example in
+                    GeneratedSlangExample(
+                        sentence: example.sentence.trimmingCharacters(in: .whitespacesAndNewlines),
+                        meaning: example.meaning.trimmingCharacters(in: .whitespacesAndNewlines)
+                    )
+                }
+                .filter { !$0.sentence.isEmpty && !$0.meaning.isEmpty }
+                .prefix(3)
+                .map { $0 }
+        } catch {
+            print("Firebase AI Logic invalid examples JSON response:", rawText)
+            throw AIServiceError.invalidResponse
+        }
+    }
+
+    private func generateRawText(prompt: String) async throws -> String {
+        let response: GenerateContentResponse
+        do {
+            response = try await model.generateContent(prompt)
+        } catch GenerateContentError.promptBlocked {
+            throw AIServiceError.blocked
+        } catch GenerateContentError.responseStoppedEarly {
+            throw AIServiceError.blocked
+        } catch GenerateContentError.internalError(let underlying) {
+            throw classifyInternalError(underlying)
+        } catch let error as URLError {
+            print("Firebase AI Logic network error:", error)
+            throw AIServiceError.networkUnavailable
+        } catch {
+            if let mappedError = mapUnderlyingError(error) {
+                throw mappedError
+            }
+
+            throw error
+        }
+
+        let rawText = response.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+
+        guard !rawText.isEmpty else {
+            throw AIServiceError.emptyResponse
+        }
+
+        return rawText
     }
 
     private func makePrompt(text: String, sourceLanguage: String, targetLanguage: String, style: TranslationStyle) -> String {
@@ -141,8 +182,9 @@ final class AIService {
           ]
         }
         The result must contain only the final decoded translation.
-        Notes must be written in English, focus on specific source expressions, and contain at most 3 items.
-        Notes should explain only slang, idioms, profanity, meme expressions, abbreviations, or culturally loaded phrases.
+        Notes must be written in English, focus on specific source expressions, and contain at most 5 items.
+        Do not force 5 notes. Return fewer notes when there are fewer meaningful expressions.
+        Notes should explain only meaningful slang, idioms, profanity, meme expressions, abbreviations, or culturally loaded phrases.
         Do not explain ordinary literal words such as nouns, names, pronouns, or basic verbs.
         If a phrase mixes literal words and slang, choose the smallest meaningful slang or idiomatic expression.
         Never use a whole sentence as sourceExpression unless the entire sentence is idiomatic.
@@ -156,6 +198,41 @@ final class AIService {
 
         Text:
         \(text)
+        """
+    }
+
+    private func makeExamplesPrompt(expression: String, meaning: String, sourceLanguage: String) -> String {
+        let trimmedMeaning = meaning.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedSourceLanguage = sourceLanguage.trimmingCharacters(in: .whitespacesAndNewlines)
+        let meaningInstruction = trimmedMeaning.isEmpty
+            ? "Use the common meaning of the expression."
+            : "Meaning: \(trimmedMeaning)"
+        let languageInstruction = trimmedSourceLanguage.isEmpty || trimmedSourceLanguage == "Unknown"
+            ? "Use the same language as the expression."
+            : "Write every sentence in \(trimmedSourceLanguage)."
+
+        return """
+        Create 3 short, natural example sentences that use the saved expression.
+        Expression: \(expression)
+        Expression language: \(trimmedSourceLanguage.isEmpty ? "Unknown" : trimmedSourceLanguage)
+        \(meaningInstruction)
+        \(languageInstruction)
+        Keep each sentence easy to understand and useful for learning.
+        Use the expression naturally in the sentence.
+        Do not translate the expression into English unless the expression language is English.
+        The sentence field must be in the expression language.
+        The meaning field must be a short English explanation of the sentence.
+        Do not include explanations outside JSON.
+        Return only a valid JSON object. Do not use markdown. Do not wrap the JSON in code fences.
+        The JSON object must have this shape:
+        {
+          "examples": [
+            {
+              "sentence": "short natural sentence using the expression",
+              "meaning": "short English meaning of the sentence"
+            }
+          ]
+        }
         """
     }
 
@@ -256,6 +333,10 @@ final class AIService {
 
         return nil
     }
+}
+
+private struct GeneratedExamplesResponse: Decodable {
+    let examples: [GeneratedSlangExample]
 }
 
 /// Prompt instructions for each user-visible style option.
