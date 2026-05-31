@@ -58,6 +58,12 @@ final class HistoryStore {
         userDefaults.removeObject(forKey: storageKey)
     }
 
+    /// Removes one locally saved history item by id.
+    func delete(id: UUID) {
+        let items = loadItems().filter { $0.id != id }
+        persist(items)
+    }
+
     private func persist(_ items: [HistoryItem]) {
         do {
             let data = try JSONEncoder().encode(items)

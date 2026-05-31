@@ -30,4 +30,19 @@ extension HistoryViewController: UITableViewDataSource, UITableViewDelegate {
         selectedItem = items[indexPath.row]
         performSegue(withIdentifier: Self.historyDetailSegueIdentifier, sender: self)
     }
+
+    func tableView(
+        _ tableView: UITableView,
+        trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
+    ) -> UISwipeActionsConfiguration? {
+        let item = items[indexPath.row]
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] _, _, completion in
+            self?.confirmDelete(item)
+            completion(false)
+        }
+
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        configuration.performsFirstActionWithFullSwipe = false
+        return configuration
+    }
 }

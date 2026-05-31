@@ -27,6 +27,10 @@ extension HistoryViewController {
         view.backgroundColor = pageBackgroundColor
     }
 
+    func updateDeleteAllButtonState() {
+        deleteAllHistoryButton?.isEnabled = !items.isEmpty
+    }
+
     func updateBackgroundView() {
         guard items.isEmpty else {
             tableView.backgroundView = nil

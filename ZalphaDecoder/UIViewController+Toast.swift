@@ -17,6 +17,8 @@ protocol ToastPresenting: AnyObject where Self: UIViewController {
 
 extension ViewController: ToastPresenting {}
 extension HistoryDetailViewController: ToastPresenting {}
+extension SavedSlangsViewController: ToastPresenting {}
+extension SavedSlangDetailViewController: ToastPresenting {}
 
 /// Shared toast presentation behavior for storyboard-backed screens.
 extension ToastPresenting {

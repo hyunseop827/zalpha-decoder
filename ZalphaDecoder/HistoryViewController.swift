@@ -12,6 +12,7 @@ final class HistoryViewController: UIViewController {
     static let historyDetailSegueIdentifier = "ShowHistoryDetail"
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var deleteAllHistoryButton: UIBarButtonItem!
 
     var items: [HistoryItem] = []
     var selectedItem: HistoryItem?
@@ -45,6 +46,7 @@ final class HistoryViewController: UIViewController {
         items = HistoryStore.shared.loadItems()
         tableView.reloadData()
         updateBackgroundView()
+        updateDeleteAllButtonState()
     }
 }
 

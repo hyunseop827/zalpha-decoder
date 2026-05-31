@@ -14,12 +14,17 @@ final class SavedSlangsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
 
     var items: [SavedSlang] = []
+    var filteredItems: [SavedSlang] = []
     var selectedItem: SavedSlang?
+    let searchController = UISearchController(searchResultsController: nil)
+    var toastLabel: ToastLabel?
+    var toastHideWorkItem: DispatchWorkItem?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         configureTableView()
+        configureSearchController()
         registerForThemeChanges()
     }
 
@@ -47,6 +52,7 @@ final class SavedSlangsViewController: UIViewController {
 
     func reloadSavedSlangs() {
         items = SavedSlangStore.shared.loadItems()
+        applySearchFilter(searchController.searchBar.text)
         tableView.reloadData()
         updateBackgroundView()
     }

@@ -18,7 +18,9 @@ final class SavedSlangDetailViewController: UIViewController {
     @IBOutlet weak var translationsCardView: UIView!
     @IBOutlet weak var translationsStackView: UIStackView!
 
-    private var item: SavedSlang?
+    var item: SavedSlang?
+    var toastLabel: ToastLabel?
+    var toastHideWorkItem: DispatchWorkItem?
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -410,7 +410,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2917.1428571428573" y="121.71052631578947"/>
+            <point key="canvasLocation" x="2986" y="-188"/>
         </scene>
         <!--History-->
         <scene sceneID="qaJ-bC-mzX">
@@ -458,7 +458,7 @@
                                                                             <color key="textColor" systemColor="secondaryLabelColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="250" text="인생 조졌다" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yuL-nb-Nbd" userLabel="Input Preview Label">
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="인생 조졌다" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yuL-nb-Nbd" userLabel="Input Preview Label">
                                                                             <rect key="frame" x="0.0" y="18.333333333333336" width="338" height="18"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="18" id="tg3-IJ-qZ7"/>
@@ -478,7 +478,7 @@
                                                                         <constraint firstAttribute="height" constant="1" id="H4G-ZC-fg6"/>
                                                                     </constraints>
                                                                 </view>
-                                                                <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="250" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Xes-Sp-S3w" userLabel="Output Preview Stack View">
+                                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Xes-Sp-S3w" userLabel="Output Preview Stack View">
                                                                     <rect key="frame" x="0.0" y="81.666666666666671" width="338" height="36.333333333333329"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Output - English" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z72-UZ-eRC" userLabel="Output Title Label">
@@ -490,7 +490,7 @@
                                                                             <color key="textColor" systemColor="secondaryLabelColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="250" text="My life is ruined." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8WJ-4v-zDM" userLabel="Output Preview Label">
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="My life is ruined." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8WJ-4v-zDM" userLabel="Output Preview Label">
                                                                             <rect key="frame" x="0.0" y="18.333333333333329" width="338" height="18"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="18" id="Gdl-ms-pi6"/>
@@ -506,7 +506,7 @@
                                                             </subviews>
                                                         </stackView>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Fla-dx-Ecr" userLabel="Chevron Image View">
-                                                            <rect key="frame" x="364" y="62.000000000000014" width="10" height="12.333333333333314"/>
+                                                            <rect key="frame" x="364" y="67" width="10" height="12.333333333333329"/>
                                                             <color key="tintColor" systemColor="tertiaryLabelColor"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="16" id="q5d-ZE-0aL"/>
@@ -557,8 +557,15 @@
                             <constraint firstItem="pH0-wq-n5F" firstAttribute="trailing" secondItem="cM1-mM-Rf4" secondAttribute="trailing" id="uA9-KK-dDh"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="3iu-h8-wYH"/>
+                    <navigationItem key="navigationItem" id="3iu-h8-wYH">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="trash" catalog="system" id="clR-pB-e96">
+                            <connections>
+                                <action selector="deleteAllHistoryButtonTapped:" destination="u8d-oQ-AuO" id="tEW-Ui-Zbz"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="deleteAllHistoryButton" destination="clR-pB-e96" id="D7Y-uC-vBZ"/>
                         <outlet property="tableView" destination="cM1-mM-Rf4" id="zIw-Fh-21L"/>
                         <segue destination="uZP-n6-ncR" kind="show" identifier="ShowHistoryDetail" id="teR-wy-Knw"/>
                     </connections>
@@ -567,33 +574,33 @@
             </objects>
             <point key="canvasLocation" x="3828" y="-212"/>
         </scene>
-	        <!--Saved Slangs Navigation Controller-->
-	        <scene sceneID="h3w-zp-b7L">
-	            <objects>
-	                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="G4d-Ek-kpy" sceneMemberID="viewController">
-	                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Jae-lG-t5D">
-	                        <rect key="frame" x="0.0" y="136" width="420" height="54"/>
-	                        <autoresizingMask key="autoresizingMask"/>
-	                    </navigationBar>
-	                    <nil name="viewControllers"/>
-	                    <connections>
-	                        <segue destination="KvN-3q-rJm" kind="relationship" relationship="rootViewController" id="D6c-gZ-TRr"/>
-	                    </connections>
-	                </navigationController>
-	                <placeholder placeholderIdentifier="IBFirstResponder" id="mX2-vQ-f6c" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-	            </objects>
-	            <point key="canvasLocation" x="2986" y="530"/>
-	        </scene>
-	        <!--Saved Slangs-->
-	        <scene sceneID="eBi-Lx-xV6">
+        <!--Navigation Controller-->
+        <scene sceneID="h3w-zp-b7L">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="G4d-Ek-kpy" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Jae-lG-t5D">
+                        <rect key="frame" x="0.0" y="20" width="420" height="54"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="KvN-3q-rJm" kind="relationship" relationship="rootViewController" id="D6c-gZ-TRr"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mX2-vQ-f6c" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2986" y="530"/>
+        </scene>
+        <!--Saved Slangs-->
+        <scene sceneID="eBi-Lx-xV6">
             <objects>
                 <viewController title="Saved Slangs" id="KvN-3q-rJm" customClass="SavedSlangsViewController" customModule="ZalphaDecoder" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lFs-rC-yjR">
-                        <rect key="frame" x="0.0" y="0.0" width="420" height="912"/>
+                        <rect key="frame" x="0.0" y="0.0" width="420" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="118" estimatedRowHeight="118" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="S1K-dn-ieS" userLabel="Saved Slangs Table View">
-                                <rect key="frame" x="0.0" y="136" width="420" height="708"/>
+                                <rect key="frame" x="0.0" y="74" width="420" height="770"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SavedSlangCell" rowHeight="118" id="D0W-m2-Ont" customClass="SavedSlangCell" customModule="ZalphaDecoder" customModuleProvider="target">
@@ -609,8 +616,8 @@
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="zM7-vg-A1a" userLabel="Saved Slang Card Stack View">
                                                             <rect key="frame" x="14" y="14" width="360" height="72"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="250" text="조졌다" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ByC-u4-usJ" userLabel="Expression Label">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="360" height="29.666666666666668"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="조졌다" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ByC-u4-usJ" userLabel="Expression Label">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="360" height="28.666666666666668"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="22" id="kze-6z-4cn"/>
                                                                     </constraints>
@@ -619,7 +626,7 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Meaning: to be ruined or messed up" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JHd-pB-tUb" userLabel="Meaning Label">
-                                                                    <rect key="frame" x="0.0" y="35.666666666666664" width="360" height="17"/>
+                                                                    <rect key="frame" x="0.0" y="34.666666666666664" width="360" height="17"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="17" id="o2v-VN-Hyq"/>
                                                                     </constraints>
@@ -627,7 +634,7 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Updated May 27, 2026 at 10:38 PM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hJ4-n4-zCf" userLabel="Metadata Label">
-                                                                    <rect key="frame" x="0.0" y="58.666666666666671" width="360" height="14.333333333333329"/>
+                                                                    <rect key="frame" x="0.0" y="57.666666666666679" width="360" height="14.333333333333336"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="14" id="G8g-26-osb"/>
                                                                     </constraints>
@@ -675,13 +682,13 @@
                             <constraint firstItem="GCB-MG-nlt" firstAttribute="trailing" secondItem="S1K-dn-ieS" secondAttribute="trailing" id="hWM-Uw-qS5"/>
                         </constraints>
                     </view>
-	                    <navigationItem key="navigationItem" title="Saved Slangs" id="ke4-6u-e3U">
-	                        <barButtonItem key="leftBarButtonItem" title="Item" image="xmark" catalog="system" id="tbs-Rh-F01">
-	                            <connections>
-	                                <action selector="closeButtonTapped:" destination="KvN-3q-rJm" id="uET-85-ZvC"/>
-	                            </connections>
-	                        </barButtonItem>
-	                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Saved Slangs" id="ke4-6u-e3U">
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="xmark" catalog="system" id="tbs-Rh-F01">
+                            <connections>
+                                <action selector="closeButtonTapped:" destination="KvN-3q-rJm" id="uET-85-ZvC"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="S1K-dn-ieS" id="GaC-fY-X8Y"/>
                         <segue destination="Roq-ZF-Xqh" kind="show" identifier="ShowSavedSlangDetail" id="N1E-DV-o0k"/>
@@ -691,7 +698,7 @@
             </objects>
             <point key="canvasLocation" x="3828" y="530"/>
         </scene>
-        <!--Saved Slang Detail View Controller-->
+        <!--Saved Slang-->
         <scene sceneID="M14-lm-Ij9">
             <objects>
                 <viewController id="Roq-ZF-Xqh" customClass="SavedSlangDetailViewController" customModule="ZalphaDecoder" customModuleProvider="target" sceneMemberID="viewController">
@@ -700,7 +707,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pz7-qr-U7n">
-                                <rect key="frame" x="0.0" y="68" width="420" height="776"/>
+                                <rect key="frame" x="0.0" y="74" width="420" height="770"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tAh-XC-tmA" userLabel="Content View">
                                         <rect key="frame" x="0.0" y="0.0" width="420" height="465"/>
@@ -755,7 +762,7 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b3H-8x-xeD" userLabel="Translations Card View">
                                                         <rect key="frame" x="0.0" y="249.66666666666669" width="380" height="163.33333333333331"/>
                                                         <subviews>
-	                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Example Translations" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="odD-DS-q1G" userLabel="Translations Title Label">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Example Translations" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="odD-DS-q1G" userLabel="Translations Title Label">
                                                                 <rect key="frame" x="16" y="15.999999999999998" width="348" height="20.333333333333329"/>
                                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                                 <nil key="textColor"/>
@@ -817,7 +824,20 @@
                             <constraint firstItem="CPg-i8-kJf" firstAttribute="trailing" secondItem="Pz7-qr-U7n" secondAttribute="trailing" id="adx-QN-6wa"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Saved Slang" id="67l-b7-GAH"/>
+                    <navigationItem key="navigationItem" title="Saved Slang" id="67l-b7-GAH">
+                        <rightBarButtonItems>
+                            <barButtonItem title="Item" image="trash" catalog="system" id="xrh-vh-Td4">
+                                <connections>
+                                    <action selector="deleteSlangButtonTapped:" destination="Roq-ZF-Xqh" id="itQ-sF-Ud7"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Item" image="document.on.document" catalog="system" id="N22-YU-kYV">
+                                <connections>
+                                    <action selector="copyExpressionButtonTapped:" destination="Roq-ZF-Xqh" id="Ahf-j1-aBR"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
                     <connections>
                         <outlet property="contentView" destination="tAh-XC-tmA" id="zWK-DJ-9Pj"/>
                         <outlet property="expressionLabel" destination="Uvw-cD-q5h" id="vvh-K4-qp7"/>
@@ -833,7 +853,7 @@
             </objects>
             <point key="canvasLocation" x="4683" y="530"/>
         </scene>
-        <!--History Detail View Controller-->
+        <!--History Detail-->
         <scene sceneID="zWm-1Z-rn5">
             <objects>
                 <viewController id="uZP-n6-ncR" customClass="HistoryDetailViewController" customModule="ZalphaDecoder" customModuleProvider="target" sceneMemberID="viewController">
@@ -1015,7 +1035,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="teR-wy-Knw"/>
+        <segue reference="Rf9-MY-048"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrow.left.arrow.right" catalog="system" width="120" height="128"/>
@@ -1025,7 +1045,8 @@
         <image name="globe" catalog="system" width="128" height="123"/>
         <image name="lightbulb.max" catalog="system" width="121" height="128"/>
         <image name="text.book.closed" catalog="system" width="115" height="128"/>
-        <image name="xmark" catalog="system" width="113" height="113"/>
+        <image name="trash" catalog="system" width="117" height="128"/>
+        <image name="xmark" catalog="system" width="128" height="113"/>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

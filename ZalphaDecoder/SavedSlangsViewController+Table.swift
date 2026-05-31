@@ -10,7 +10,7 @@ import UIKit
 /// Handles Saved Slangs table view data binding and row selection.
 extension SavedSlangsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        items.count
+        displayedItems.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -21,13 +21,56 @@ extension SavedSlangsViewController: UITableViewDataSource, UITableViewDelegate 
             return UITableViewCell()
         }
 
-        cell.configure(with: items[indexPath.row])
+        cell.configure(with: displayedItems[indexPath.row])
         return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        selectedItem = items[indexPath.row]
+        selectedItem = displayedItems[indexPath.row]
         performSegue(withIdentifier: Self.savedSlangDetailSegueIdentifier, sender: self)
+    }
+
+    func tableView(
+        _ tableView: UITableView,
+        trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
+    ) -> UISwipeActionsConfiguration? {
+        let item = displayedItems[indexPath.row]
+        let copyAction = UIContextualAction(style: .normal, title: "Copy") { [weak self] _, _, completion in
+            self?.copyExpression(from: item)
+            completion(true)
+        }
+        copyAction.backgroundColor = accentColor
+
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] _, _, completion in
+            self?.confirmDelete(item)
+            completion(false)
+        }
+
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction, copyAction])
+        configuration.performsFirstActionWithFullSwipe = false
+        return configuration
+    }
+
+    private func copyExpression(from item: SavedSlang) {
+        UIPasteboard.general.string = item.sourceExpression
+        UINotificationFeedbackGenerator().notificationOccurred(.success)
+        showToast("Expression copied.")
+    }
+
+    private func confirmDelete(_ item: SavedSlang) {
+        let alertController = UIAlertController(
+            title: "Delete this slang?",
+            message: "\"\(item.sourceExpression)\"",
+            preferredStyle: .alert
+        )
+        alertController.addAction(UIAlertAction(title: "No", style: .cancel))
+        alertController.addAction(UIAlertAction(title: "Yes", style: .destructive) { [weak self] _ in
+            SavedSlangStore.shared.delete(id: item.id)
+            self?.reloadSavedSlangs()
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
+            self?.showToast("Deleted.")
+        })
+        present(alertController, animated: true)
     }
 }

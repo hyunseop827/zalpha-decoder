@@ -28,6 +28,9 @@ extension SavedSlangDetailViewController {
             $0?.backgroundColor = cardBackgroundColor
             $0?.layer.borderColor = borderColor.cgColor
         }
+
+        toastLabel?.backgroundColor = toastBackgroundColor
+        toastLabel?.textColor = toastTextColor
     }
 
     func configureCards() {
@@ -81,6 +84,20 @@ extension SavedSlangDetailViewController {
             traitCollection.userInterfaceStyle == .dark
                 ? UIColor(white: 1, alpha: 0.13)
                 : UIColor(white: 0, alpha: 0.10)
+        }
+    }
+
+    var toastBackgroundColor: UIColor {
+        UIColor { traitCollection in
+            traitCollection.userInterfaceStyle == .dark
+                ? UIColor(white: 1, alpha: 0.90)
+                : UIColor(white: 0, alpha: 0.86)
+        }
+    }
+
+    var toastTextColor: UIColor {
+        UIColor { traitCollection in
+            traitCollection.userInterfaceStyle == .dark ? UIColor.black : UIColor.white
         }
     }
 }

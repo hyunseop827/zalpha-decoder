@@ -114,6 +114,12 @@ final class SavedSlangStore {
         userDefaults.removeObject(forKey: storageKey)
     }
 
+    /// Removes one locally saved slang item by id.
+    func delete(id: UUID) {
+        let items = loadItems().filter { $0.id != id }
+        persist(items)
+    }
+
     private func appendUnique(_ value: String, to values: inout [String]) -> Bool {
         let trimmedValue = value.trimmingCharacters(in: .whitespacesAndNewlines)
         let normalizedValue = normalize(trimmedValue)
