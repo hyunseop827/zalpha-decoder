@@ -141,8 +141,9 @@ extension HistoryDetailViewController {
         )
         alertController.addAction(UIAlertAction(title: "No", style: .cancel))
         alertController.addAction(UIAlertAction(title: "Yes", style: .default) { [weak self] _ in
+            let result = SavedSlangStore.shared.save(note)
             UINotificationFeedbackGenerator().notificationOccurred(.success)
-            self?.showToast("Note saved.")
+            self?.showToast(result.message)
         })
         present(alertController, animated: true)
     }

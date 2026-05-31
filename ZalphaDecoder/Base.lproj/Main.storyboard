@@ -363,13 +363,18 @@
 	                            <constraint firstItem="RYU-Ba-9Zw" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="hu6-7I-sEd"/>
 	                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Zalpha Decoder" id="cmJ-1b-pJe">
-                        <barButtonItem key="leftBarButtonItem" title="Item" image="clock.arrow.trianglehead.counterclockwise.rotate.90" catalog="system" id="iPH-st-zS2">
-                            <connections>
-                                <segue destination="u8d-oQ-AuO" kind="show" id="Gi6-WN-fRr"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+	                    <navigationItem key="navigationItem" title="Zalpha Decoder" id="cmJ-1b-pJe">
+	                        <barButtonItem key="leftBarButtonItem" title="Item" image="clock.arrow.trianglehead.counterclockwise.rotate.90" catalog="system" id="iPH-st-zS2">
+	                            <connections>
+	                                <segue destination="u8d-oQ-AuO" kind="show" id="Gi6-WN-fRr"/>
+	                            </connections>
+	                        </barButtonItem>
+	                        <barButtonItem key="rightBarButtonItem" title="Item" image="note.text" catalog="system" id="N7y-QH-tAg">
+	                            <connections>
+	                                <segue destination="KvN-3q-rJm" kind="show" id="tD4-jk-X9K"/>
+	                            </connections>
+	                        </barButtonItem>
+	                    </navigationItem>
                     <connections>
                         <outlet property="casualStyleButton" destination="vYW-sp-shz" id="rqy-fD-Uy1"/>
                         <outlet property="characterCountLabel" destination="FSs-J2-WSG" id="OzG-bc-c4b"/>
@@ -541,9 +546,109 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ent-rN-8Ky" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3828" y="-212"/>
-        </scene>
-        <!--History Detail View Controller-->
-        <scene sceneID="zWm-1Z-rn5">
+	        </scene>
+	        <!--Saved Slangs-->
+	        <scene sceneID="eBi-Lx-xV6">
+	            <objects>
+	                <viewController title="Saved Slangs" id="KvN-3q-rJm" customClass="SavedSlangsViewController" customModule="ZalphaDecoder" customModuleProvider="target" sceneMemberID="viewController">
+	                    <view key="view" contentMode="scaleToFill" id="lFs-rC-yjR">
+	                        <rect key="frame" x="0.0" y="0.0" width="420" height="912"/>
+	                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+	                        <subviews>
+	                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="142" estimatedRowHeight="142" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="S1K-dn-ieS" userLabel="Saved Slangs Table View">
+	                                <rect key="frame" x="0.0" y="190" width="420" height="654"/>
+	                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+	                                <inset key="contentInset" minX="0.0" minY="12" maxX="0.0" maxY="20"/>
+	                                <prototypes>
+	                                    <tableViewCell clipsSubviews="NO" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SavedSlangCell" rowHeight="142" id="D0W-m2-Ont" customClass="SavedSlangCell" customModule="ZalphaDecoder" customModuleProvider="target">
+	                                        <rect key="frame" x="0.0" y="50.333333969116211" width="420" height="142"/>
+	                                        <autoresizingMask key="autoresizingMask"/>
+	                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+	                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="NO" multipleTouchEnabled="YES" contentMode="center" tableViewCell="D0W-m2-Ont" id="UyQ-h2-ff6">
+	                                            <rect key="frame" x="0.0" y="0.0" width="420" height="142"/>
+	                                            <autoresizingMask key="autoresizingMask"/>
+	                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+	                                            <subviews>
+	                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xu2-F8-HmA" userLabel="Saved Slang Card View">
+	                                                    <rect key="frame" x="16" y="9" width="388" height="124"/>
+	                                                    <subviews>
+	                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="zM7-vg-A1a" userLabel="Saved Slang Card Stack View">
+	                                                            <rect key="frame" x="14" y="14" width="360" height="96"/>
+	                                                            <subviews>
+	                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="조졌다" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="1" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ByC-u4-usJ" userLabel="Expression Label">
+	                                                                    <rect key="frame" x="0.0" y="0.0" width="360" height="21.666666666666668"/>
+	                                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+	                                                                    <color key="textColor" systemColor="labelColor"/>
+	                                                                    <nil key="highlightedColor"/>
+	                                                                </label>
+	                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Meaning: to be ruined or messed up" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JHd-pB-tUb" userLabel="Meaning Label">
+	                                                                    <rect key="frame" x="0.0" y="27.666666666666671" width="360" height="16.666666666666671"/>
+	                                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+	                                                                    <color key="textColor" systemColor="labelColor"/>
+	                                                                    <nil key="highlightedColor"/>
+	                                                                </label>
+	                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Translated: ruined" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q0M-eR-C7m" userLabel="Translated Label">
+	                                                                    <rect key="frame" x="0.0" y="50.333333333333343" width="360" height="16.666666666666664"/>
+	                                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+	                                                                    <color key="textColor" systemColor="labelColor"/>
+	                                                                    <nil key="highlightedColor"/>
+	                                                                </label>
+	                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seen 1x · Updated May 27, 2026 at 10:38 PM" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="1" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hJ4-n4-zCf" userLabel="Metadata Label">
+	                                                                    <rect key="frame" x="0.0" y="73" width="360" height="14.333333333333329"/>
+	                                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+	                                                                    <color key="textColor" systemColor="secondaryLabelColor"/>
+	                                                                    <nil key="highlightedColor"/>
+	                                                                </label>
+	                                                            </subviews>
+	                                                        </stackView>
+	                                                    </subviews>
+	                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+	                                                    <constraints>
+	                                                        <constraint firstItem="zM7-vg-A1a" firstAttribute="leading" secondItem="Xu2-F8-HmA" secondAttribute="leading" constant="14" id="65e-5k-qTS"/>
+	                                                        <constraint firstAttribute="bottom" secondItem="zM7-vg-A1a" secondAttribute="bottom" constant="14" id="EXk-Hj-wUQ"/>
+	                                                        <constraint firstAttribute="trailing" secondItem="zM7-vg-A1a" secondAttribute="trailing" constant="14" id="aek-3j-8pe"/>
+	                                                        <constraint firstItem="zM7-vg-A1a" firstAttribute="top" secondItem="Xu2-F8-HmA" secondAttribute="top" constant="14" id="v20-eo-gOp"/>
+	                                                    </constraints>
+	                                                </view>
+	                                            </subviews>
+	                                            <constraints>
+	                                                <constraint firstAttribute="trailing" secondItem="Xu2-F8-HmA" secondAttribute="trailing" constant="16" id="3o0-BN-igT"/>
+	                                                <constraint firstItem="Xu2-F8-HmA" firstAttribute="leading" secondItem="UyQ-h2-ff6" secondAttribute="leading" constant="16" id="SAI-QA-qht"/>
+	                                                <constraint firstItem="Xu2-F8-HmA" firstAttribute="top" secondItem="UyQ-h2-ff6" secondAttribute="top" constant="9" id="iVA-MP-nqs"/>
+	                                                <constraint firstAttribute="bottom" secondItem="Xu2-F8-HmA" secondAttribute="bottom" constant="9" id="sSD-mc-itX"/>
+	                                            </constraints>
+	                                        </tableViewCellContentView>
+	                                        <connections>
+	                                            <outlet property="cardView" destination="Xu2-F8-HmA" id="yMs-RD-JFv"/>
+	                                            <outlet property="expressionLabel" destination="ByC-u4-usJ" id="Qpk-SY-NYd"/>
+	                                            <outlet property="meaningLabel" destination="JHd-pB-tUb" id="1gn-ZY-tLl"/>
+	                                            <outlet property="metadataLabel" destination="hJ4-n4-zCf" id="bbN-Sr-ydz"/>
+	                                            <outlet property="translatedLabel" destination="Q0M-eR-C7m" id="ANn-U9-Wzm"/>
+	                                        </connections>
+	                                    </tableViewCell>
+	                                </prototypes>
+	                            </tableView>
+	                        </subviews>
+	                        <viewLayoutGuide key="safeArea" id="GCB-MG-nlt"/>
+	                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+	                        <constraints>
+	                            <constraint firstItem="S1K-dn-ieS" firstAttribute="top" secondItem="GCB-MG-nlt" secondAttribute="top" id="RWX-Sh-EDq"/>
+	                            <constraint firstItem="S1K-dn-ieS" firstAttribute="leading" secondItem="GCB-MG-nlt" secondAttribute="leading" id="VjG-Ph-7YE"/>
+	                            <constraint firstItem="GCB-MG-nlt" firstAttribute="bottom" secondItem="S1K-dn-ieS" secondAttribute="bottom" id="h1V-ZJ-rI9"/>
+	                            <constraint firstItem="GCB-MG-nlt" firstAttribute="trailing" secondItem="S1K-dn-ieS" secondAttribute="trailing" id="hWM-Uw-qS5"/>
+	                        </constraints>
+	                    </view>
+	                    <navigationItem key="navigationItem" id="ke4-6u-e3U"/>
+	                    <connections>
+	                        <outlet property="tableView" destination="S1K-dn-ieS" id="GaC-fY-X8Y"/>
+	                    </connections>
+	                </viewController>
+	                <placeholder placeholderIdentifier="IBFirstResponder" id="hOq-gT-Brc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+	            </objects>
+	            <point key="canvasLocation" x="3828" y="530"/>
+	        </scene>
+	        <!--History Detail View Controller-->
+	        <scene sceneID="zWm-1Z-rn5">
             <objects>
                 <viewController id="uZP-n6-ncR" customClass="HistoryDetailViewController" customModule="ZalphaDecoder" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="AEz-j3-UQi">
@@ -732,8 +837,9 @@
         <image name="clock.arrow.trianglehead.counterclockwise.rotate.90" catalog="system" width="128" height="119"/>
         <image name="doc.on.doc" catalog="system" width="116" height="128"/>
         <image name="globe" catalog="system" width="128" height="123"/>
-        <image name="lightbulb.max" catalog="system" width="121" height="128"/>
-        <systemColor name="secondaryLabelColor">
+	        <image name="lightbulb.max" catalog="system" width="121" height="128"/>
+	        <image name="note.text" catalog="system" width="113" height="128"/>
+	        <systemColor name="secondaryLabelColor">
             <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="separatorColor">

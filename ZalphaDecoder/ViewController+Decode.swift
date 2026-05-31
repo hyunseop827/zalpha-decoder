@@ -81,6 +81,7 @@ extension ViewController {
         decodeButton.isEnabled = !isLoading
         decodeButton.alpha = isLoading ? 0.78 : 1.0
         navigationItem.leftBarButtonItem?.isEnabled = !isLoading
+        navigationItem.rightBarButtonItem?.isEnabled = !isLoading
 
         if isLoading {
             view.bringSubviewToFront(loadingOverlayView)
