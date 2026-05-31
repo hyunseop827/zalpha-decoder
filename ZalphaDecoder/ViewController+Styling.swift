@@ -57,7 +57,6 @@ extension ViewController {
             $0?.textColor = secondaryLabelColor
         }
         notesBodyLabel.textColor = labelColor
-        notesBodyLabel.font = .systemFont(ofSize: 14, weight: .medium)
         loadingOverlayView.backgroundColor = loadingOverlayColor
         loadingTitleLabel.textColor = labelColor
         loadingActivityIndicator.color = accentColor
@@ -90,8 +89,6 @@ extension ViewController {
     func configureLanguageButtons() {
         [sourceLanguageButton, targetLanguageButton].forEach {
             $0?.configuration = nil
-            $0?.setImage(UIImage(systemName: "globe"), for: .normal)
-            $0?.imageView?.preferredSymbolConfiguration = UIImage.SymbolConfiguration(pointSize: 22, weight: .regular)
             $0?.showsMenuAsPrimaryAction = true
             $0?.changesSelectionAsPrimaryAction = false
             $0?.titleLabel?.adjustsFontSizeToFitWidth = true
@@ -108,14 +105,11 @@ extension ViewController {
         }
 
         swapLanguageButton.configuration = nil
-        swapLanguageButton.setTitle(nil, for: .normal)
-        swapLanguageButton.setImage(UIImage(systemName: "arrow.left.arrow.right"), for: .normal)
         swapLanguageButton.tintColor = accentColor
         swapLanguageButton.backgroundColor = controlBackgroundColor
         swapLanguageButton.layer.cornerRadius = 24
         swapLanguageButton.layer.borderWidth = 1
         swapLanguageButton.layer.borderColor = borderColor.cgColor
-        swapLanguageButton.imageView?.preferredSymbolConfiguration = UIImage.SymbolConfiguration(pointSize: 19, weight: .medium)
         applySmallShadow(to: swapLanguageButton)
     }
 
@@ -130,7 +124,6 @@ extension ViewController {
 
         buttons.forEach { button in
             button.configuration = nil
-            button.titleLabel?.font = .systemFont(ofSize: 16, weight: .semibold)
             button.titleLabel?.adjustsFontSizeToFitWidth = true
             button.titleLabel?.minimumScaleFactor = 0.8
             button.layer.cornerRadius = 17
@@ -143,9 +136,6 @@ extension ViewController {
     /// Configures the main Decode action button.
     func configureDecodeButton() {
         decodeButton.configuration = nil
-        decodeButton.setTitle("Decode", for: .normal)
-        decodeButton.setTitleColor(.white, for: .normal)
-        decodeButton.titleLabel?.font = .systemFont(ofSize: 20, weight: .semibold)
         decodeButton.backgroundColor = accentColor
         decodeButton.layer.cornerRadius = 22
     }
@@ -161,14 +151,8 @@ extension ViewController {
     /// Configures icon-only utility buttons such as copy and notes.
     func configureUtilityButtons() {
         copyButton.configuration = nil
-        copyButton.setTitle(nil, for: .normal)
-        copyButton.setImage(UIImage(systemName: "document.on.document"), for: .normal)
-        copyButton.imageView?.preferredSymbolConfiguration = UIImage.SymbolConfiguration(pointSize: 30, weight: .regular)
 
         notesIconButton.configuration = nil
-        notesIconButton.setTitle(nil, for: .normal)
-        notesIconButton.setImage(UIImage(systemName: "lightbulb.max"), for: .normal)
-        notesIconButton.imageView?.preferredSymbolConfiguration = UIImage.SymbolConfiguration(pointSize: 24, weight: .regular)
         notesIconButton.isUserInteractionEnabled = false
     }
 

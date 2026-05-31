@@ -182,7 +182,9 @@
                                                                 </constraints>
                                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                <state key="normal" title="Decode"/>
+                                                                <state key="normal" title="Decode">
+                                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                </state>
                                                                 <connections>
                                                                     <action selector="decodeButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3jk-ne-pZv"/>
                                                                 </connections>
@@ -815,7 +817,7 @@
                             <constraint firstItem="CPg-i8-kJf" firstAttribute="trailing" secondItem="Pz7-qr-U7n" secondAttribute="trailing" id="adx-QN-6wa"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="67l-b7-GAH"/>
+                    <navigationItem key="navigationItem" title="Saved Slang" id="67l-b7-GAH"/>
                     <connections>
                         <outlet property="contentView" destination="tAh-XC-tmA" id="zWK-DJ-9Pj"/>
                         <outlet property="expressionLabel" destination="Uvw-cD-q5h" id="vvh-K4-qp7"/>
@@ -973,7 +975,7 @@
                             <constraint firstItem="gfG-Vc-JgG" firstAttribute="trailing" secondItem="bbS-2k-x59" secondAttribute="trailing" id="jAV-7S-G3y"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="zBR-E6-TaV"/>
+                    <navigationItem key="navigationItem" title="History Detail" id="zBR-E6-TaV"/>
                     <connections>
                         <outlet property="contentView" destination="p20-EG-2ol" id="fUz-7f-xAm"/>
                         <outlet property="emptyNotesLabel" destination="L8O-kl-dIZ" id="ZrT-Lq-TyA"/>

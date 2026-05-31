@@ -9,12 +9,12 @@ import UIKit
 
 /// Displays locally saved decode history records.
 final class HistoryViewController: UIViewController {
-    private static let historyDetailSegueIdentifier = "ShowHistoryDetail"
+    static let historyDetailSegueIdentifier = "ShowHistoryDetail"
 
     @IBOutlet weak var tableView: UITableView!
 
-    private var items: [HistoryItem] = []
-    private var selectedItem: HistoryItem?
+    var items: [HistoryItem] = []
+    var selectedItem: HistoryItem?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,73 +41,10 @@ final class HistoryViewController: UIViewController {
         selectedItem = nil
     }
 
-    private func configureTableView() {
-        configureDynamicColors()
-        tableView.dataSource = self
-        tableView.delegate = self
-    }
-
-    private func registerForThemeChanges() {
-        registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (viewController: HistoryViewController, _) in
-            viewController.configureDynamicColors()
-            viewController.tableView.reloadData()
-        }
-    }
-
-    private func configureDynamicColors() {
-        view.backgroundColor = pageBackgroundColor
-    }
-
-    private func reloadHistory() {
+    func reloadHistory() {
         items = HistoryStore.shared.loadItems()
         tableView.reloadData()
         updateBackgroundView()
-    }
-
-    private func updateBackgroundView() {
-        guard items.isEmpty else {
-            tableView.backgroundView = nil
-            return
-        }
-
-        let label = UILabel()
-        label.text = "No history yet."
-        label.textColor = .secondaryLabel
-        label.font = .systemFont(ofSize: 17, weight: .medium)
-        label.textAlignment = .center
-        tableView.backgroundView = label
-    }
-
-    private var pageBackgroundColor: UIColor {
-        UIColor { traitCollection in
-            traitCollection.userInterfaceStyle == .dark
-                ? UIColor(red: 0.06, green: 0.06, blue: 0.07, alpha: 1)
-                : UIColor.systemGray6
-        }
-    }
-}
-
-extension HistoryViewController: UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        items.count
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: HistoryCell.reuseIdentifier,
-            for: indexPath
-        ) as? HistoryCell else {
-            return UITableViewCell()
-        }
-
-        cell.configure(with: items[indexPath.row])
-        return cell
-    }
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        selectedItem = items[indexPath.row]
-        performSegue(withIdentifier: Self.historyDetailSegueIdentifier, sender: self)
     }
 }
 

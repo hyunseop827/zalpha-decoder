@@ -39,7 +39,6 @@ final class HistoryDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "History Detail"
         configureStoryboardViews()
         registerForThemeChanges()
         renderItem()
