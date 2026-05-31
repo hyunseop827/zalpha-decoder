@@ -162,7 +162,7 @@ extension ViewController {
     func configureUtilityButtons() {
         copyButton.configuration = nil
         copyButton.setTitle(nil, for: .normal)
-        copyButton.setImage(UIImage(systemName: "doc.on.doc"), for: .normal)
+        copyButton.setImage(UIImage(systemName: "document.on.document"), for: .normal)
         copyButton.imageView?.preferredSymbolConfiguration = UIImage.SymbolConfiguration(pointSize: 30, weight: .regular)
 
         notesIconButton.configuration = nil

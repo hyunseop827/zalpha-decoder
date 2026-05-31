@@ -9,9 +9,12 @@ import UIKit
 
 /// Displays locally saved slang notes.
 final class SavedSlangsViewController: UIViewController {
+    private static let savedSlangDetailSegueIdentifier = "ShowSavedSlangDetail"
+
     @IBOutlet weak var tableView: UITableView!
 
     private var items: [SavedSlang] = []
+    private var selectedItem: SavedSlang?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +27,22 @@ final class SavedSlangsViewController: UIViewController {
         super.viewWillAppear(animated)
 
         reloadSavedSlangs()
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard segue.identifier == Self.savedSlangDetailSegueIdentifier,
+              let detailViewController = segue.destination as? SavedSlangDetailViewController else {
+            return
+        }
+
+        if let selectedItem = selectedItem {
+            detailViewController.configure(with: selectedItem)
+        }
+        selectedItem = nil
+    }
+
+    @IBAction func closeButtonTapped(_ sender: UIBarButtonItem) {
+        dismiss(animated: true)
     }
 
     private func configureTableView() {
@@ -87,5 +106,11 @@ extension SavedSlangsViewController: UITableViewDataSource, UITableViewDelegate 
 
         cell.configure(with: items[indexPath.row])
         return cell
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        selectedItem = items[indexPath.row]
+        performSegue(withIdentifier: Self.savedSlangDetailSegueIdentifier, sender: self)
     }
 }

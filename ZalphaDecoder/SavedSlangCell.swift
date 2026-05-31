@@ -14,7 +14,6 @@ final class SavedSlangCell: UITableViewCell {
     @IBOutlet weak var cardView: UIView!
     @IBOutlet weak var expressionLabel: UILabel!
     @IBOutlet weak var meaningLabel: UILabel!
-    @IBOutlet weak var translatedLabel: UILabel!
     @IBOutlet weak var metadataLabel: UILabel!
 
     override func awakeFromNib() {
@@ -28,7 +27,6 @@ final class SavedSlangCell: UITableViewCell {
 
         expressionLabel.text = nil
         meaningLabel.text = nil
-        translatedLabel.text = nil
         metadataLabel.text = nil
     }
 
@@ -45,8 +43,7 @@ final class SavedSlangCell: UITableViewCell {
     func configure(with item: SavedSlang) {
         expressionLabel.text = item.sourceExpression
         meaningLabel.text = item.meanings.first.map { "Meaning: \($0)" } ?? "Meaning: -"
-        translatedLabel.text = item.translatedExpressions.first.map { "Translated: \($0)" } ?? "Translated: -"
-        metadataLabel.text = "Seen \(item.seenCount)x · Updated \(HistoryDateFormatter.shortDateTime.string(from: item.updatedAt))"
+        metadataLabel.text = "Updated \(HistoryDateFormatter.shortDateTime.string(from: item.updatedAt))"
         applyDynamicColors()
     }
 
@@ -62,9 +59,14 @@ final class SavedSlangCell: UITableViewCell {
     }
 
     private func applyDynamicColors() {
+        expressionLabel.textColor = accentColor
         cardView.backgroundColor = cardBackgroundColor
         cardView.layer.borderColor = borderColor.cgColor
         cardView.layer.shadowOpacity = isDarkMode ? 0.08 : 0.12
+    }
+
+    private var accentColor: UIColor {
+        UIColor(red: 1.0, green: 0.27, blue: 0.0, alpha: 1.0)
     }
 
     private var isDarkMode: Bool {
