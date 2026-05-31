@@ -35,11 +35,12 @@ extension HistoryDetailViewController {
 
     private func makeNoteView(_ note: DecodeNote) -> UIView {
         let view = UIView()
-        view.backgroundColor = noteCardBackgroundColor
-        view.layer.cornerRadius = 12
-        view.layer.cornerCurve = .continuous
-        view.layer.borderWidth = 1
-        view.layer.borderColor = noteBorderColor.cgColor
+        AppTheme.applySurfaceStyle(
+            to: view,
+            backgroundColor: AppTheme.noteCardBackgroundColor,
+            borderColor: AppTheme.noteBorderColor,
+            cornerRadius: 12
+        )
 
         let contentStackView = UIStackView()
         contentStackView.axis = .vertical
@@ -49,7 +50,7 @@ extension HistoryDetailViewController {
             makeNoteField(
                 title: "Expression",
                 value: note.sourceExpression,
-                valueColor: accentColor,
+                valueColor: AppTheme.accentColor,
                 valueFont: .systemFont(ofSize: 16, weight: .semibold)
             )
         )
@@ -57,7 +58,7 @@ extension HistoryDetailViewController {
             makeNoteField(
                 title: "Meaning",
                 value: note.meaning,
-                valueColor: .label,
+                valueColor: AppTheme.labelColor,
                 valueFont: .systemFont(ofSize: 15, weight: .medium)
             )
         )
@@ -67,7 +68,7 @@ extension HistoryDetailViewController {
                 makeNoteField(
                     title: "Translated As",
                     value: note.translatedExpression,
-                    valueColor: .label,
+                    valueColor: AppTheme.labelColor,
                     valueFont: .systemFont(ofSize: 15, weight: .medium)
                 )
             )
@@ -112,9 +113,12 @@ extension HistoryDetailViewController {
         button.setTitle("Save", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 14, weight: .semibold)
-        button.backgroundColor = accentColor
-        button.layer.cornerRadius = 16
-        button.layer.cornerCurve = .continuous
+        AppTheme.applySurfaceStyle(
+            to: button,
+            backgroundColor: AppTheme.accentColor,
+            cornerRadius: 16,
+            borderWidth: 0
+        )
         button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         button.addAction(UIAction { [weak self] _ in
             self?.confirmSave(note)
@@ -141,26 +145,14 @@ extension HistoryDetailViewController {
         )
         alertController.addAction(UIAlertAction(title: "No", style: .cancel))
         alertController.addAction(UIAlertAction(title: "Yes", style: .default) { [weak self] _ in
-            let result = SavedSlangStore.shared.save(note, sourceLanguage: self?.item?.sourceLanguage ?? "Unknown")
+            let result = SavedSlangStore.shared.save(
+                note,
+                sourceLanguage: self?.item?.sourceLanguage ?? "Unknown",
+                meaningLanguage: self?.item?.targetLanguage ?? note.meaningLanguage
+            )
             UINotificationFeedbackGenerator().notificationOccurred(.success)
             self?.showToast(result.message)
         })
         present(alertController, animated: true)
-    }
-
-    private var noteCardBackgroundColor: UIColor {
-        UIColor { traitCollection in
-            traitCollection.userInterfaceStyle == .dark
-                ? UIColor(red: 0.16, green: 0.16, blue: 0.18, alpha: 1)
-                : UIColor.systemGray6
-        }
-    }
-
-    private var noteBorderColor: UIColor {
-        UIColor { traitCollection in
-            traitCollection.userInterfaceStyle == .dark
-                ? UIColor(white: 1, alpha: 0.10)
-                : UIColor(white: 0, alpha: 0.08)
-        }
     }
 }

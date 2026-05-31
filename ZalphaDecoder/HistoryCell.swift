@@ -39,10 +39,7 @@ final class HistoryCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        cardView.layer.shadowPath = UIBezierPath(
-            roundedRect: cardView.bounds,
-            cornerRadius: cardView.layer.cornerRadius
-        ).cgPath
+        AppTheme.updateShadowPath(for: cardView)
     }
 
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
@@ -73,40 +70,19 @@ final class HistoryCell: UITableViewCell {
     }
 
     private func configureRuntimeStyle() {
-        cardView.layer.cornerRadius = 14
-        cardView.layer.cornerCurve = .continuous
-        cardView.layer.borderWidth = 1
-        cardView.layer.shadowColor = UIColor.black.cgColor
-        cardView.layer.shadowRadius = 5
-        cardView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        AppTheme.applyCardStyle(
+            to: cardView,
+            cornerRadius: 14,
+            shadow: AppTheme.listCardShadow
+        )
 
         applyDynamicColors()
     }
 
     private func applyDynamicColors() {
-        dividerView.backgroundColor = borderColor
-        cardView.backgroundColor = cardBackgroundColor
-        cardView.layer.borderColor = borderColor.cgColor
-        cardView.layer.shadowOpacity = isDarkMode ? 0.08 : 0.12
-    }
-
-    private var isDarkMode: Bool {
-        traitCollection.userInterfaceStyle == .dark
-    }
-
-    private var cardBackgroundColor: UIColor {
-        UIColor { traitCollection in
-            traitCollection.userInterfaceStyle == .dark
-                ? UIColor(red: 0.12, green: 0.12, blue: 0.13, alpha: 1)
-                : UIColor.white
-        }
-    }
-
-    private var borderColor: UIColor {
-        UIColor { traitCollection in
-            traitCollection.userInterfaceStyle == .dark
-                ? UIColor(white: 1, alpha: 0.13)
-                : UIColor(white: 0, alpha: 0.10)
-        }
+        dividerView.backgroundColor = AppTheme.borderColor
+        cardView.backgroundColor = AppTheme.cardBackgroundColor
+        cardView.layer.borderColor = AppTheme.borderColor.cgColor
+        AppTheme.applyShadow(AppTheme.listCardShadow, to: cardView)
     }
 }

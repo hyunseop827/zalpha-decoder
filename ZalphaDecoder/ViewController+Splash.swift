@@ -12,8 +12,7 @@ extension ViewController {
 
     /// Displays the in-app splash once, then fades it out after a short delay.
     func showStartupSplashIfNeeded() {
-        guard !hasShownStartupSplash else { return }
-        hasShownStartupSplash = true
+        guard screenModel.markStartupSplashShownIfNeeded() else { return }
 
         let containerView: UIView = navigationController?.view ?? view
         let overlayView = UIView()

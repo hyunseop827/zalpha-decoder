@@ -15,7 +15,7 @@ extension ViewController {
     func runDecode() async {
         let input = inputTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !input.isEmpty else {
-            showToast(nextEmptyDecodeMessage())
+            showToast(screenModel.nextEmptyDecodeMessage())
             return
         }
 
@@ -29,7 +29,7 @@ extension ViewController {
             return
         }
 
-        emptyDecodeTapCount = 0
+        screenModel.resetEmptyDecodeTapCount()
         setDecodeLoading(true)
         defer {
             setDecodeLoading(false)
@@ -39,22 +39,16 @@ extension ViewController {
             let decodeResult = try await aiService.decode(
                 text: input,
                 sourceLanguage: resolvedSourceLanguage.displayName,
-                targetLanguage: targetLanguage.displayName,
-                style: selectedStyle
+                targetLanguage: screenModel.targetLanguage.displayName,
+                style: screenModel.selectedStyle
             )
             outputTextView.text = decodeResult.result
             notesBodyLabel.attributedText = formattedNotes(decodeResult.notes)
-            let historyItem = HistoryItem(
-                id: UUID(),
-                createdAt: Date(),
-                sourceLanguage: resolvedSourceLanguage.displayName,
-                targetLanguage: targetLanguage.displayName,
-                style: selectedStyle.displayName,
+            let historyItem = screenModel.recordHistoryItem(
+                resolvedSourceLanguage: resolvedSourceLanguage,
                 inputText: input,
-                outputText: decodeResult.result,
-                notes: decodeResult.notes
+                decodeResult: decodeResult
             )
-            latestHistoryItem = historyItem
             HistoryStore.shared.save(historyItem)
         } catch AIServiceError.blocked {
             print("Firebase AI Logic decode blocked by safety filters.")
@@ -86,7 +80,7 @@ extension ViewController {
     /// Shows or hides the blocking loading overlay while a Gemini request is in progress.
     @MainActor
     func setDecodeLoading(_ isLoading: Bool) {
-        isDecoding = isLoading
+        screenModel.setDecoding(isLoading)
         decodeButton.isEnabled = !isLoading
         decodeButton.alpha = isLoading ? 0.78 : 1.0
         navigationItem.leftBarButtonItem?.isEnabled = !isLoading
@@ -107,18 +101,6 @@ extension ViewController {
                 self.loadingOverlayView.isHidden = true
             }
         }
-    }
-
-    /// Returns the next empty-input toast message based on repeated empty Decode taps.
-    private func nextEmptyDecodeMessage() -> String {
-        emptyDecodeTapCount += 1
-
-        guard emptyDecodeTapCount > 3 else {
-            return DecodeMessage.emptyInputDefault
-        }
-
-        let index = (emptyDecodeTapCount - 4) % DecodeMessage.emptyInputVariants.count
-        return DecodeMessage.emptyInputVariants[index]
     }
 
     /// Formats short Decode Notes as spaced bullets for the notes card.
@@ -146,36 +128,4 @@ extension ViewController {
             ]
         )
     }
-}
-
-private enum DecodeMessage {
-    static let emptyInputDefault = "Enter text to decode."
-    static let safetyBlocked = "This text could not be decoded safely."
-    static let rateLimited = "Too many requests. Try again soon."
-    static let networkUnavailable = "Check your connection and try again."
-    static let aiUnavailable = "AI is temporarily unavailable."
-    static let genericError = "Could not decode. Try again."
-
-    static let emptyInputVariants = [
-        "Bro, it's empty.",
-        "There is nothing to decode.",
-        "Bro, this ain't tuff. 🥀",
-        "No text? We are cooked.",
-        "Is bro okay?",
-        "Type something plz 🙏",
-        "No words, no decode.",
-        "Skibidi Toilet",
-        "I mog you btw...",
-        "Messi or Ronaldo ???",
-        "Zalpha needs actual text, bro.",
-        "Idc at this moment",
-        "This is sub3 behavior",
-        "Never expected someone doing this",
-        "you win bro",
-        "go sleep plz",
-        "Enter text to decode.",
-        "Enter text to decode.",
-        "Enter text to decode.",
-        "touch grass plz"
-    ]
 }

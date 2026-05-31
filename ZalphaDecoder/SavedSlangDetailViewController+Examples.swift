@@ -12,36 +12,25 @@ extension SavedSlangDetailViewController {
 
     @IBAction func generateExamplesButtonTapped(_ sender: UIButton) {
         guard !isGeneratingExamples else { return }
-
         guard let item else { return }
-        guard item.examples.isEmpty else {
-            confirmRegenerateExamples()
+
+        guard item.examples.count < SavedSlangLimits.maximumExampleCount else {
+            showToast("Delete an example first.")
             return
         }
 
         Task {
-            await generateExamples()
+            await generateExample()
         }
     }
 
-    private func confirmRegenerateExamples() {
-        let alertController = UIAlertController(
-            title: "Replace existing examples?",
-            message: "This will remove the current examples and generate new ones.",
-            preferredStyle: .alert
-        )
-        alertController.addAction(UIAlertAction(title: "No", style: .cancel))
-        alertController.addAction(UIAlertAction(title: "Yes", style: .destructive) { [weak self] _ in
-            Task {
-                await self?.generateExamples()
-            }
-        })
-        present(alertController, animated: true)
-    }
-
     @MainActor
-    private func generateExamples() async {
+    private func generateExample() async {
         guard let item else { return }
+        guard item.examples.count < SavedSlangLimits.maximumExampleCount else {
+            showToast("Delete an example first.")
+            return
+        }
 
         setExamplesLoading(true)
         defer {
@@ -49,27 +38,22 @@ extension SavedSlangDetailViewController {
         }
 
         do {
-            let generatedExamples = try await aiService.generateExamples(
+            let generatedExample = try await aiService.generateExample(
                 expression: item.sourceExpression,
                 meaning: item.meanings.first ?? "",
-                sourceLanguage: item.sourceLanguage
+                sourceLanguage: item.sourceLanguage,
+                meaningLanguage: item.meaningLanguage
             )
-            let savedExamples = generatedExamples.map {
-                SavedSlangExample(
-                    id: UUID(),
-                    sentence: $0.sentence,
-                    meaning: $0.meaning,
-                    createdAt: Date()
-                )
-            }
+            let savedExample = SavedSlangExample(
+                id: UUID(),
+                sentence: generatedExample.sentence,
+                meaning: generatedExample.meaning,
+                createdAt: Date()
+            )
 
-            guard !savedExamples.isEmpty else {
-                showToast("Could not generate examples.")
-                return
-            }
-
-            guard let updatedItem = SavedSlangStore.shared.replaceExamples(savedExamples, for: item.id) else {
-                showToast("Could not save examples.")
+            let saveResult = SavedSlangStore.shared.appendExample(savedExample, for: item.id)
+            guard case let .saved(updatedItem) = saveResult else {
+                showToast(saveResult.message)
                 return
             }
 
@@ -77,7 +61,7 @@ extension SavedSlangDetailViewController {
             renderItem()
 
             UINotificationFeedbackGenerator().notificationOccurred(.success)
-            showToast(item.examples.isEmpty ? "Examples added." : "Examples replaced.")
+            showToast(saveResult.message)
         } catch AIServiceError.blocked {
             print("Firebase AI Logic example generation blocked by safety filters.")
             showToast("Examples could not be generated safely.")

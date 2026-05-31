@@ -7,29 +7,8 @@
 
 import UIKit
 
-/// Output tone options shared by the style buttons and AI prompt.
-enum TranslationStyle {
-    case formal
-    case plain
-    case casual
-    case genZalpha
-
-    var displayName: String {
-        switch self {
-        case .formal:
-            return "Formal"
-        case .plain:
-            return "Plain"
-        case .casual:
-            return "Casual"
-        case .genZalpha:
-            return "Zalpha"
-        }
-    }
-}
-
 /// Main storyboard-backed screen controller for user actions and screen state.
-class ViewController: UIViewController, UITextViewDelegate, UIGestureRecognizerDelegate {
+class ViewController: UIViewController, UIGestureRecognizerDelegate {
     private static let currentDecodeDetailSegueIdentifier = "ShowCurrentDecodeDetail"
 
     @IBOutlet weak var scrollView: UIScrollView!
@@ -63,46 +42,17 @@ class ViewController: UIViewController, UITextViewDelegate, UIGestureRecognizerD
     @IBOutlet weak var loadingActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var loadingTitleLabel: UILabel!
 
-    /// Supported language options shown in the source and target menus.
-    enum Language: CaseIterable {
-        case auto
-        case english
-        case korean
-
-        var displayName: String {
-            switch self {
-            case .auto:
-                return "Auto"
-            case .english:
-                return "English"
-            case .korean:
-                return "한국어"
-            }
-        }
-
-        static let sourceOptions: [Language] = [.auto, .english, .korean]
-        static let targetOptions: [Language] = [.english, .korean]
-    }
-
-    /// Main accent color used by buttons, symbols, and selected states.
-    let accentColor = UIColor(red: 1.0, green: 0.27, blue: 0.0, alpha: 1.0)
     let aiService = AIService()
-    var isDecoding = false
-    var hasShownStartupSplash = false
-    var emptyDecodeTapCount = 0
-    private let maximumInputLength = 100
+    let screenModel = DecodeScreenModel()
+    private var textInputController: TextInputController?
     var toastLabel: ToastLabel?
     var toastHideWorkItem: DispatchWorkItem?
-    var selectedStyle: TranslationStyle = .formal
-    var sourceLanguage: Language = .auto
-    var targetLanguage: Language = .english
-    var latestHistoryItem: HistoryItem?
 
     /// Performs one-time screen setup after storyboard outlets are connected.
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        inputTextView.delegate = self
+        configureTextInputController()
         configureInterface()
         registerForThemeChanges()
         updateStyleSelection()
@@ -128,7 +78,7 @@ class ViewController: UIViewController, UITextViewDelegate, UIGestureRecognizerD
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard segue.identifier == Self.currentDecodeDetailSegueIdentifier,
               let detailViewController = segue.destination as? HistoryDetailViewController,
-              let latestHistoryItem else {
+              let latestHistoryItem = screenModel.latestHistoryItem else {
             return
         }
 
@@ -137,6 +87,7 @@ class ViewController: UIViewController, UITextViewDelegate, UIGestureRecognizerD
 
     /// Updates the selected style when one of the style buttons is tapped.
     @IBAction func styleButtonTapped(_ sender: UIButton) {
+        let selectedStyle: TranslationStyle
         switch sender {
         case cleanStyleButton:
             selectedStyle = .formal
@@ -150,13 +101,14 @@ class ViewController: UIViewController, UITextViewDelegate, UIGestureRecognizerD
             selectedStyle = .formal
         }
 
+        screenModel.selectStyle(selectedStyle)
         updateStyleSelection()
     }
 
     /// Starts the Decode flow unless an existing decode request is already running.
     @IBAction func decodeButtonTapped(_ sender: UIButton) {
         view.endEditing(true)
-        guard !isDecoding else { return }
+        guard !screenModel.isDecoding else { return }
 
         Task { [weak self] in
             await self?.runDecode()
@@ -165,13 +117,7 @@ class ViewController: UIViewController, UITextViewDelegate, UIGestureRecognizerD
 
     /// Swaps source and target language while keeping Auto out of the target menu.
     @IBAction func swapLanguageButtonTapped(_ sender: UIButton) {
-        if sourceLanguage == .auto {
-            sourceLanguage = targetLanguage
-            targetLanguage = oppositeLanguage(of: sourceLanguage)
-        } else {
-            swap(&sourceLanguage, &targetLanguage)
-        }
-
+        screenModel.swapLanguages()
         updateLanguageInterface()
     }
 
@@ -187,7 +133,7 @@ class ViewController: UIViewController, UITextViewDelegate, UIGestureRecognizerD
 
     /// Opens the current decode result in the History Detail screen.
     @objc func notesCardTapped() {
-        guard latestHistoryItem != nil else {
+        guard screenModel.latestHistoryItem != nil else {
             showToast("Nothing to show yet.")
             return
         }
@@ -200,43 +146,9 @@ class ViewController: UIViewController, UITextViewDelegate, UIGestureRecognizerD
         view.endEditing(true)
     }
 
-    /// Keeps input state, empty-input count, and character counter in sync while typing.
-    func textViewDidChange(_ textView: UITextView) {
-        if textView == inputTextView, textView.text.count > maximumInputLength {
-            textView.text = String(textView.text.prefix(maximumInputLength))
-        }
-
-        if textView == inputTextView, !textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            emptyDecodeTapCount = 0
-        }
-
-        updateCharacterCount()
-    }
-
-    /// Prevents the input text view from accepting more than the maximum allowed characters.
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        guard textView == inputTextView else { return true }
-        guard let currentText = textView.text, let stringRange = Range(range, in: currentText) else {
-            return false
-        }
-
-        let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
-        guard updatedText.count > maximumInputLength else { return true }
-
-        let replacedLength = currentText[stringRange].count
-        let remainingCount = maximumInputLength - (currentText.count - replacedLength)
-        guard remainingCount > 0 else { return false }
-
-        let allowedText = String(text.prefix(remainingCount))
-        textView.text = currentText.replacingCharacters(in: stringRange, with: allowedText)
-        updateCharacterCount()
-        return false
-    }
-
     /// Allows background taps to dismiss the keyboard without blocking input text view touches.
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        guard let touchedView = touch.view else { return true }
-        return !touchedView.isDescendant(of: inputTextView)
+        textInputController?.gestureRecognizer(gestureRecognizer, shouldReceive: touch) ?? true
     }
 
     /// Applies selected and unselected visual states to the style button group.
@@ -249,7 +161,7 @@ class ViewController: UIViewController, UITextViewDelegate, UIGestureRecognizerD
         ]
 
         styles.forEach { style, button in
-            let isSelected = style == selectedStyle
+            let isSelected = style == screenModel.selectedStyle
             button.backgroundColor = isSelected ? accentColor : controlBackgroundColor
             button.setTitleColor(isSelected ? .white : labelColor, for: .normal)
             button.layer.borderColor = isSelected ? UIColor.clear.cgColor : borderColor.cgColor
@@ -259,24 +171,24 @@ class ViewController: UIViewController, UITextViewDelegate, UIGestureRecognizerD
 
     /// Refreshes language button titles, menus, and input/output language labels.
     func updateLanguageInterface() {
-        configureLanguageButton(sourceLanguageButton, language: sourceLanguage)
-        configureLanguageButton(targetLanguageButton, language: targetLanguage)
+        configureLanguageButton(sourceLanguageButton, language: screenModel.sourceLanguage)
+        configureLanguageButton(targetLanguageButton, language: screenModel.targetLanguage)
         sourceLanguageButton.menu = makeLanguageMenu(
-            selectedLanguage: sourceLanguage,
-            options: Language.sourceOptions,
+            selectedLanguage: screenModel.sourceLanguage,
+            options: DecodeLanguage.sourceOptions,
             changesSource: true
         )
         targetLanguageButton.menu = makeLanguageMenu(
-            selectedLanguage: targetLanguage,
-            options: Language.targetOptions,
+            selectedLanguage: screenModel.targetLanguage,
+            options: DecodeLanguage.targetOptions,
             changesSource: false
         )
-        inputLanguageLabel.text = "Input - \(sourceLanguage.displayName)"
-        outputLanguageLabel.text = "Output - \(targetLanguage.displayName)"
+        inputLanguageLabel.text = "Input - \(screenModel.sourceLanguage.displayName)"
+        outputLanguageLabel.text = "Output - \(screenModel.targetLanguage.displayName)"
     }
 
     /// Applies the current language name and shared icon styling to a language button.
-    private func configureLanguageButton(_ button: UIButton, language: Language) {
+    private func configureLanguageButton(_ button: UIButton, language: DecodeLanguage) {
         button.setTitle(language.displayName, for: .normal)
         button.setTitleColor(labelColor, for: .normal)
         button.tintColor = accentColor
@@ -284,7 +196,11 @@ class ViewController: UIViewController, UITextViewDelegate, UIGestureRecognizerD
     }
 
     /// Builds the source or target language menu from the available language options.
-    private func makeLanguageMenu(selectedLanguage: Language, options: [Language], changesSource: Bool) -> UIMenu {
+    private func makeLanguageMenu(
+        selectedLanguage: DecodeLanguage,
+        options: [DecodeLanguage],
+        changesSource: Bool
+    ) -> UIMenu {
         let actions = options.map { language in
             UIAction(
                 title: language.displayName,
@@ -298,24 +214,27 @@ class ViewController: UIViewController, UITextViewDelegate, UIGestureRecognizerD
     }
 
     /// Stores the selected source or target language and refreshes the visible UI.
-    private func setLanguage(_ language: Language, changesSource: Bool) {
-        if changesSource {
-            sourceLanguage = language
-        } else {
-            targetLanguage = language
-        }
-
+    private func setLanguage(_ language: DecodeLanguage, changesSource: Bool) {
+        screenModel.setLanguage(language, changesSource: changesSource)
         updateLanguageInterface()
-    }
-
-    /// Returns the opposite concrete language used when swapping from Auto mode.
-    private func oppositeLanguage(of language: Language) -> Language {
-        language == .english ? .korean : .english
     }
 
     /// Updates the visible input character counter.
     private func updateCharacterCount() {
         let count = inputTextView.text.count
-        characterCountLabel.text = "\(count)/\(maximumInputLength)"
+        characterCountLabel.text = "\(count)/\(TextInputController.maximumInputLength)"
+    }
+
+    /// Keeps text input delegate behavior strongly retained outside UIKit weak delegate storage.
+    private func configureTextInputController() {
+        textInputController = TextInputController(
+            inputTextView: inputTextView,
+            onTextChanged: { [weak self] in
+                self?.updateCharacterCount()
+            },
+            onNonEmptyInput: { [weak self] in
+                self?.screenModel.resetEmptyDecodeTapCount()
+            }
+        )
     }
 }

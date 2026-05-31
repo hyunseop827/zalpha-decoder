@@ -24,7 +24,7 @@ extension HistoryViewController {
     }
 
     func configureDynamicColors() {
-        view.backgroundColor = pageBackgroundColor
+        view.backgroundColor = AppTheme.pageBackgroundColor
     }
 
     func updateDeleteAllButtonState() {
@@ -39,17 +39,9 @@ extension HistoryViewController {
 
         let label = UILabel()
         label.text = "No history yet."
-        label.textColor = .secondaryLabel
+        label.textColor = AppTheme.secondaryLabelColor
         label.font = .systemFont(ofSize: 17, weight: .medium)
         label.textAlignment = .center
         tableView.backgroundView = label
-    }
-
-    var pageBackgroundColor: UIColor {
-        UIColor { traitCollection in
-            traitCollection.userInterfaceStyle == .dark
-                ? UIColor(red: 0.06, green: 0.06, blue: 0.07, alpha: 1)
-                : UIColor.systemGray6
-        }
     }
 }

@@ -226,70 +226,42 @@ extension ViewController {
     }
 
     var pageBackgroundColor: UIColor {
-        UIColor { traits in
-            traits.userInterfaceStyle == .dark
-                ? UIColor(red: 0.06, green: 0.06, blue: 0.07, alpha: 1.0)
-                : UIColor(red: 0.95, green: 0.95, blue: 0.97, alpha: 1.0)
-        }
+        AppTheme.pageBackgroundColor
     }
 
     var cardBackgroundColor: UIColor {
-        UIColor { traits in
-            traits.userInterfaceStyle == .dark
-                ? UIColor(red: 0.12, green: 0.12, blue: 0.13, alpha: 1.0)
-                : UIColor.white
-        }
+        AppTheme.cardBackgroundColor
     }
 
     var controlBackgroundColor: UIColor {
-        UIColor { traits in
-            traits.userInterfaceStyle == .dark
-                ? UIColor(red: 0.17, green: 0.17, blue: 0.18, alpha: 1.0)
-                : UIColor.white
-        }
+        AppTheme.controlBackgroundColor
     }
 
     var borderColor: UIColor {
-        UIColor { traits in
-            traits.userInterfaceStyle == .dark
-                ? UIColor(white: 1.0, alpha: 0.14)
-                : UIColor(white: 0.0, alpha: 0.16)
-        }
+        AppTheme.borderColor
     }
 
     var loadingOverlayColor: UIColor {
-        UIColor { traits in
-            traits.userInterfaceStyle == .dark
-                ? UIColor(white: 0.0, alpha: 0.46)
-                : UIColor(white: 0.0, alpha: 0.24)
-        }
+        AppTheme.loadingOverlayColor
     }
 
     var labelColor: UIColor {
-        UIColor { traits in
-            traits.userInterfaceStyle == .dark ? UIColor.white : UIColor.black
-        }
+        AppTheme.labelColor
     }
 
     var secondaryLabelColor: UIColor {
-        UIColor { traits in
-            traits.userInterfaceStyle == .dark
-                ? UIColor(white: 1.0, alpha: 0.58)
-                : UIColor(white: 0.0, alpha: 0.42)
-        }
+        AppTheme.secondaryLabelColor
     }
 
     var toastBackgroundColor: UIColor {
-        UIColor { traits in
-            traits.userInterfaceStyle == .dark
-                ? UIColor(white: 1.0, alpha: 0.90)
-                : UIColor(white: 0.0, alpha: 0.86)
-        }
+        AppTheme.toastBackgroundColor
     }
 
     var toastTextColor: UIColor {
-        UIColor { traits in
-            traits.userInterfaceStyle == .dark ? UIColor.black : UIColor.white
-        }
+        AppTheme.toastTextColor
+    }
+
+    var accentColor: UIColor {
+        AppTheme.accentColor
     }
 }

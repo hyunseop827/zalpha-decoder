@@ -62,8 +62,8 @@ final class SavedSlangDetailViewController: UIViewController {
         guard let item else { return }
 
         expressionLabel.text = item.sourceExpression
-        metadataLabel.text = "\(item.sourceLanguage) · Updated \(HistoryDateFormatter.shortDateTime.string(from: item.updatedAt))"
-        generateExamplesButton.setTitle(item.examples.isEmpty ? "Generate Examples" : "Regenerate Examples", for: .normal)
+        metadataLabel.text = "\(item.sourceLanguage) → \(item.meaningLanguage) · Updated \(HistoryDateFormatter.shortDateTime.string(from: item.updatedAt))"
+        generateExamplesButton.setTitle("Generate Example", for: .normal)
         renderValues(item.meanings, in: meaningsStackView, emptyText: "No meanings saved.")
         renderValues(item.translatedExpressions, in: translationsStackView, emptyText: "No translations saved.")
         renderExamples(item.examples)

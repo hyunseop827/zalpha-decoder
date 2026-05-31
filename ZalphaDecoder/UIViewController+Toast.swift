@@ -22,6 +22,13 @@ extension SavedSlangDetailViewController: ToastPresenting {}
 
 /// Shared toast presentation behavior for storyboard-backed screens.
 extension ToastPresenting {
+    var toastBackgroundColor: UIColor {
+        AppTheme.toastBackgroundColor
+    }
+
+    var toastTextColor: UIColor {
+        AppTheme.toastTextColor
+    }
 
     /// Shows a single temporary toast, replacing any currently visible toast.
     func showToast(_ message: String) {
@@ -52,12 +59,15 @@ extension ToastPresenting {
     func makeToastLabel() -> ToastLabel {
         let label = ToastLabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.backgroundColor = toastBackgroundColor
         label.textColor = toastTextColor
         label.font = .systemFont(ofSize: 14, weight: .semibold)
         label.textAlignment = .center
-        label.layer.cornerRadius = 12
-        label.layer.cornerCurve = .continuous
+        AppTheme.applySurfaceStyle(
+            to: label,
+            backgroundColor: toastBackgroundColor,
+            cornerRadius: 12,
+            borderWidth: 0
+        )
         label.clipsToBounds = true
 
         view.addSubview(label)

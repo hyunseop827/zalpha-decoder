@@ -23,7 +23,6 @@ final class HistoryDetailViewController: UIViewController {
     @IBOutlet weak var emptyNotesLabel: UILabel?
 
     var item: HistoryItem?
-    let accentColor = UIColor(red: 1.0, green: 0.27, blue: 0.0, alpha: 1.0)
     var toastLabel: ToastLabel?
     var toastHideWorkItem: DispatchWorkItem?
 

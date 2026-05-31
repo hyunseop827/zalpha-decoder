@@ -16,7 +16,7 @@ extension SavedSlangDetailViewController {
             $0.removeFromSuperview()
         }
 
-        let visibleValues = values.prefix(8)
+        let visibleValues = values.prefix(SavedSlangLimits.maximumVariantCount)
         guard !visibleValues.isEmpty else {
             stackView.addArrangedSubview(makeValueLabel(emptyText, isEmptyState: true))
             return
@@ -33,7 +33,7 @@ extension SavedSlangDetailViewController {
             $0.removeFromSuperview()
         }
 
-        let visibleExamples = Array(examples.prefix(8))
+        let visibleExamples = Array(examples.prefix(SavedSlangLimits.maximumExampleCount))
         exampleCopyTexts = visibleExamples.map(\.sentence)
         exampleIDs = visibleExamples.map(\.id)
 
@@ -52,27 +52,30 @@ extension SavedSlangDetailViewController {
         label.text = text
         label.numberOfLines = 0
         label.font = .systemFont(ofSize: 15, weight: isEmptyState ? .medium : .semibold)
-        label.textColor = isEmptyState ? .secondaryLabel : .label
+        label.textColor = isEmptyState ? AppTheme.secondaryLabelColor : AppTheme.labelColor
         return label
     }
 
     private func makeExampleView(_ example: SavedSlangExample, index: Int) -> UIView {
         let containerView = UIView()
-        containerView.backgroundColor = UIColor.secondarySystemBackground.withAlphaComponent(0.55)
-        containerView.layer.cornerRadius = 10
-        containerView.layer.cornerCurve = .continuous
+        AppTheme.applySurfaceStyle(
+            to: containerView,
+            backgroundColor: AppTheme.exampleSurfaceBackgroundColor,
+            cornerRadius: 10,
+            borderWidth: 0
+        )
 
         let sentenceLabel = UILabel()
         sentenceLabel.text = example.sentence
         sentenceLabel.numberOfLines = 0
         sentenceLabel.font = .systemFont(ofSize: 15, weight: .semibold)
-        sentenceLabel.textColor = .label
+        sentenceLabel.textColor = AppTheme.labelColor
 
         let meaningLabel = UILabel()
         meaningLabel.text = example.meaning
         meaningLabel.numberOfLines = 0
         meaningLabel.font = .systemFont(ofSize: 13, weight: .medium)
-        meaningLabel.textColor = .secondaryLabel
+        meaningLabel.textColor = AppTheme.secondaryLabelColor
 
         let textStackView = UIStackView(arrangedSubviews: [sentenceLabel, meaningLabel])
         textStackView.axis = .vertical
@@ -81,10 +84,10 @@ extension SavedSlangDetailViewController {
         let copyButton = UIButton(type: .system)
         copyButton.setImage(UIImage(systemName: "document.on.document"), for: .normal)
         copyButton.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(scale: .small), forImageIn: .normal)
-        copyButton.tintColor = accentColor
+        copyButton.tintColor = AppTheme.accentColor
         copyButton.tag = index
-        copyButton.widthAnchor.constraint(equalToConstant: 28).isActive = true
-        copyButton.heightAnchor.constraint(equalToConstant: 28).isActive = true
+        copyButton.widthAnchor.constraint(equalToConstant: 26).isActive = true
+        copyButton.heightAnchor.constraint(equalToConstant: 26).isActive = true
         copyButton.addTarget(self, action: #selector(copyExampleButtonTapped(_:)), for: .touchUpInside)
 
         let deleteButton = UIButton(type: .system)
@@ -92,8 +95,8 @@ extension SavedSlangDetailViewController {
         deleteButton.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(scale: .small), forImageIn: .normal)
         deleteButton.tintColor = .systemRed
         deleteButton.tag = index
-        deleteButton.widthAnchor.constraint(equalToConstant: 28).isActive = true
-        deleteButton.heightAnchor.constraint(equalToConstant: 28).isActive = true
+        deleteButton.widthAnchor.constraint(equalToConstant: 26).isActive = true
+        deleteButton.heightAnchor.constraint(equalToConstant: 26).isActive = true
         deleteButton.addTarget(self, action: #selector(deleteExampleButtonTapped(_:)), for: .touchUpInside)
 
         let actionStackView = UIStackView(arrangedSubviews: [copyButton, deleteButton])
