@@ -10,7 +10,9 @@ AI responses are implemented with Firebase AI Logic and Gemini. The app also sto
 
 ## Demo Video - Click to open YouTube
 
-[![Zalpha Decoder Demo](https://img.youtube.com/vi/FZlDrd5T-ns/0.jpg)](https://www.youtube.com/watch?v=FZlDrd5T-ns)
+<a href="https://www.youtube.com/watch?v=FZlDrd5T-ns">
+  <img src="https://img.youtube.com/vi/FZlDrd5T-ns/maxresdefault.jpg" alt="Zalpha Decoder Demo" width="720">
+</a>
 
 ## Features
 
