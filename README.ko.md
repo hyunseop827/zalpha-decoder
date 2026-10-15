@@ -10,7 +10,9 @@ AI 응답은 Firebase AI Logic과 Gemini를 사용해 구현했습니다. 또한
 
 ## 데모 비디오 - 클릭 시, 유튜브로 연결됩니다.
 
-[![Zalpha Decoder Demo](https://img.youtube.com/vi/ZedBuLgfi2o/0.jpg)](https://www.youtube.com/watch?v=ZedBuLgfi2o)
+<a href="https://www.youtube.com/watch?v=ZedBuLgfi2o">
+  <img src="https://img.youtube.com/vi/ZedBuLgfi2o/maxresdefault.jpg" alt="Zalpha Decoder 데모" width="720">
+</a>
 
 ## 주요 기능
 
